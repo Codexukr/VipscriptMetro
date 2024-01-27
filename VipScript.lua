@@ -102,13 +102,11 @@ function InfStamina()
 	end
 end
 
-local plr = game.Players.LocalPlayer
-
 function FactoryFarm()
 	local char = plr.Character
 
     local seller = workspace.map:WaitForChild("ikiSellerFactory").HumanoidRootPart
-    local MetalSpawn = workspace.spawnable
+    local MetalSpawn = workspace.getter
 
 
     for i,v in ipairs(MetalSpawn:GetChildren()) do
@@ -120,7 +118,7 @@ function FactoryFarm()
                 --getting 
                 if Metal then
                     char:FindFirstChild("HumanoidRootPart").CFrame = Metal.CFrame + Vector3.new(0,3,0)
-                    fireproximityprompt(Metal:FindFirstChild("Attachment").ProximityPrompt,1,true)
+                    fireproximityprompt(Metal:FindFirstChildOfClass("Attachment"):FindFirstChildOfClass("ProximityPrompt"),1,true)
                 end
 
                 --selling 
@@ -133,8 +131,6 @@ function FactoryFarm()
     end
 
 end
-
-FactoryFarm()
 
 
 

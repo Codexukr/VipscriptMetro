@@ -102,6 +102,8 @@ function InfStamina()
 	end
 end
 
+local plr = game.Players.LocalPlayer
+
 function FactoryFarm()
 	local char = plr.Character
 
@@ -110,7 +112,7 @@ function FactoryFarm()
 
 
     for i,v in ipairs(MetalSpawn:GetChildren()) do
-        if v.Name == "Ржавый металл" then
+        if v.ClassName == "UnionOperation" then
             local Metal = v
             local distance = (seller.Position - Metal.Position).Magnitude 
     
@@ -131,6 +133,8 @@ function FactoryFarm()
     end
 
 end
+
+FactoryFarm()
 
 
 

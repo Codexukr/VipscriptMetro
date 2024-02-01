@@ -10,6 +10,6 @@ function Notify(Title,Desc,time)
     )
 end
 
-Notify("Hello niga","Script Fixed / data update: nikogda",3)
+Notify("Hello niga","Script Fixed / data update: nikogda",10)
 
 

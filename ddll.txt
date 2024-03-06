@@ -1,0 +1,197 @@
+local plr = game.Players.LocalPlayer
+
+--Toggles
+_G.God = false
+
+--Aura Settings
+_G.Aura = false
+_G.Range = 20
+_G.TpSpeed = 0.1
+
+function Alive()
+	local char = plr.Character or plr.Character.Parent
+	return char
+end 
+
+function ClosestPlayer(range)
+	local char = plr.Character
+
+	local maxdist = range
+	local target
+
+	for i,v in ipairs(game:GetService("Players"):GetChildren()) do
+		if v.Name ~= plr.Name then
+			local EChar = v.Character 
+
+			if EChar then
+				local ETorso = EChar:FindFirstChild("Torso")
+				local EHuman = EChar:FindFirstChild("Humanoid")
+
+				local distance = (char:FindFirstChild("Torso").Position - ETorso.Position).Magnitude
+
+				if ETorso and EHuman and EHuman.Health >= 1 and plr.Team ~= v.Team and not EChar:FindFirstChild("ForceField") and distance <= maxdist then
+					target = v
+				end
+				
+			end
+
+		end
+	end
+
+	return target
+end
+
+--Это мое точно 
+function god(Type)
+	
+	local char = plr.Character
+
+	local path = workspace:FindFirstChild("SafeZones").Zone.Main
+	local Root = char:FindFirstChild("Head") 
+	if Type == "start" then
+		if not char:FindFirstChildOfClass("ForceField") then
+			firetouchinterest(Root,path,1)
+			firetouchinterest(Root,path,0)
+		else
+			firetouchinterest(Root,path,0)
+		end
+	else
+		firetouchinterest(Root,path,1)
+	end
+end
+
+function TPAura(range)
+	local success, err = pcall(function()
+		local char = plr.Character
+        local HRP = char:FindFirstChild("HumanoidRootPart")
+
+		local EPlr = ClosestPlayer(range)
+
+		if EPlr then
+            HRP.CFrame = EPlr.Character:FindFirstChild("HumanoidRootPart").CFrame
+            char:FindFirstChildOfClass("Tool"):Activate()
+		end
+		
+   	end)
+end
+
+
+
+---Funny ChANGE Name
+---GOD(YOU IMMORTAL)
+---Возможно пизделку денег
+---Возможно логи блокать можно будет (хз ваще)
+---Килка 
+---разогнать машинку до придела(хз зачем)
+---Silent aimbot на пистолет Возможно
+
+
+--[[
+--------------------------------UI-------------------------------
+--]]
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Pussy Destroyer(Favork Stuido)",
+    SubTitle = "UI: by dawid Main:Lerazz",
+    TabWidth = 90,
+    Size = UDim2.fromOffset(450, 350),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.M
+})
+
+--https://lucide.dev/icons/ 
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "box" }),
+    Combat = Window:AddTab({ Title = "Combat", Icon = "swords" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+    local LoopKill = Tabs.Main:AddToggle("MyToggle", {Title = "God",Description="Immortal(SAO?)", Default = false })
+
+    LoopKill:OnChanged(function(value)
+		if value then 
+			_G.God = true
+			while _G.God do 
+                god("start")
+                task.wait(0.5)
+
+			end
+		else
+			_G.God = false
+            god("nil")
+		end 
+    end)
+
+    local Aura = Tabs.Combat:AddToggle("Aura", {Title = "TP-Aura",Description="Gay-Aura", Default = false })
+
+    Aura:OnChanged(function(value)
+		if value then 
+			_G.Aura = true
+			while _G.Aura do 
+                TPAura(_G.Range)
+                task.wait(_G.TpSpeed)
+			end
+		else
+			_G.Aura = false
+		end 
+    end)
+
+    local Slider = Tabs.Combat:AddSlider("Aura-Range", {
+        Title = "Aura-Range",
+        Description = "Yea",
+        Default = 20,
+        Min = 10,
+        Max = 50,
+        Rounding = 0,
+        Callback = function(Value)
+            _G.Range = Value
+        end
+    })
+
+    local Slider = Tabs.Combat:AddSlider("TP-Speed", {
+        Title = "TP-Speed",
+        Description = "Yea",
+        Default = 0.1,
+        Min = 0.01,
+        Max = 0.1,
+        Rounding = 2,
+        Callback = function(Value)
+            _G.TpSpeed = Value
+        end
+    })
+
+
+end
+
+
+
+-- Addons:
+
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "game: Slovo picuna (Favork Studio)",
+    Content = "Succesfully loaded",
+    Duration = 8
+})
+SaveManager:LoadAutoloadConfig()

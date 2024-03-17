@@ -4,6 +4,9 @@ if _G.Loaded == false then
 end
 _G.Loaded = false
 
+--Load menu
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+
 local plr = game.Players.LocalPlayer
 
 --Toggles

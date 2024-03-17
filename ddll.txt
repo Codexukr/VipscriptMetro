@@ -1,3 +1,10 @@
+_G.Loaded = false
+if _G.Loaded then
+	print("Stop Spamming Script Loaded")
+	return
+end
+_G.Loaded = true
+
 local plr = game.Players.LocalPlayer
 
 --Toggles

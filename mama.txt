@@ -210,6 +210,7 @@ local Tabs = {
     Main = Window:AddTab({ Title = "Combat", Icon = "swords" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "hammer" }),
     Hitbox = Window:AddTab({ Title = "Hitbox-Expander", Icon = "box" }),
+    Credit = Window:AddTab({ Title = "Info/Credit", Icon = "candy" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -378,6 +379,23 @@ do
     Tabs.Hitbox:AddParagraph({
         Title = "Hitbox Bypass(Beta)",
         Content = "Fps drop I don't know why(Fixing..)"
+    })
+
+
+    --credit
+
+    Tabs.Credit:AddParagraph({
+        Title = "Discord link",
+        Content = "Let him cock all Join pls"
+    })
+
+    Tabs.Credit:AddButton({
+        Title = "Copy Discord link",
+        Description = "cock",
+        Callback = function()
+            setclipboard("https://discord.gg/K6cNNkknQn")
+            notify("Succes","Link Coppied",5)
+        end
     })
 end
 -- Addons:

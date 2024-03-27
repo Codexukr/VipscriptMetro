@@ -1,0 +1,218 @@
+local players = game:GetService("Players")
+local plr = players.LocalPlayer 
+
+--KillAura Setting
+_G.Aura =false
+_G.AuraRange = 25
+
+--Misc 
+_G.FastKill = false
+
+
+--local WeaponTable = {"Baseball Bat","Blood Dagger","Chainsaw","Electric Guitar","Emerald Greatsword","Frost Spear","Katana","Knife","Mace","Machete","Pan","Pencil","Scythe","Tennis Racket","Trident","War Hammer"}
+
+function Alive()
+	local char = plr.Character or plr.Character.Parent
+
+	if char then
+		return char
+	end
+end 
+
+function KitEquip(Kit)
+    game:GetService("Players").LocalPlayer.PlayerGui["Menu Screen"].RemoteEvent:FireServer(Kit)
+end
+
+function ClosestPlayer(range)
+	local char = plr.Character
+
+	local maxdist = range
+	local target
+
+	for i,v in ipairs(game:GetService("Players"):GetChildren()) do
+		if v.Name ~= plr.Name then
+			local EChar = v.Character 
+
+			if EChar then
+				local ETorso = EChar:FindFirstChild("Torso")
+				local EHuman = EChar:FindFirstChild("Humanoid")
+
+				local distance = (char:FindFirstChild("Torso").Position - ETorso.Position).Magnitude
+
+				if ETorso and EHuman and EHuman.Health >= 1 and not EChar:FindFirstChild("ForceField") and distance <= maxdist then
+					target = v
+				end
+				
+			end
+
+		end
+	end
+
+	return target
+end
+
+function Aura(range)
+    local char = plr.Character
+
+	local success, err = pcall(function()
+		local EPlr = ClosestPlayer(range)
+
+		if EPlr then
+			local TPart = EPlr.Character:FindFirstChild("Torso")
+			local THuman = EPlr.Character:FindFirstChild("Humanoid")
+
+            if char:FindFirstChildOfClass("Tool") == nil then return end -- check tool   
+        
+            char:FindFirstChildOfClass("Tool"):FindFirstChild("DamageRemote"):FireServer(THuman)           
+		end
+		
+   	end)
+
+end
+
+function KillAll()
+    local char = plr.Character
+
+    for i,v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Name ~= plr.Name then        
+            local EChar = v.Character
+            if EChar then
+                if not plr.Backpack:FindFirstChildOfClass("Tool") then
+                    KitEquip("Mace")
+                end 
+                if char:FindFirstChild("Kawaii Revolver") == nil then 
+                    plr.Backpack:FindFirstChild("Kawaii Revolver").Parent = char 
+                end
+
+                if char:FindFirstChildOfClass("Tool") == nil then return end
+
+                if EChar and EChar:FindFirstChild("Humanoid") and EChar:FindFirstChild("Humanoid").Health >= 1 and not EChar:FindFirstChild("ForceField") then 
+                    char:FindFirstChildOfClass("Tool"):FindFirstChild("DamageRemote"):FireServer(EChar:FindFirstChild("Humanoid"))
+                end
+
+            end
+
+        end 
+    end 
+end
+
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+function notify(title,content,duration)
+    Fluent:Notify({Title = title,Content = content,Duration=duration, })
+end 
+
+
+local Window = Fluent:CreateWindow({
+    Title = "Chaos(Remastered)",
+    SubTitle = "UI: by dawid Main:Lerazz",
+    TabWidth = 90,
+    Size = UDim2.fromOffset(450, 350),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.M
+})
+
+--https://lucide.dev/icons/ 
+local Tabs = {
+    Main = Window:AddTab({ Title = "Combat", Icon = "swords" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "hammer" }),
+    Credit = Window:AddTab({ Title = "Info/Credit", Icon = "candy" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+
+    local AuraRange = Tabs.Main:AddSlider("Kil", {
+		Title = "Kill-Aura Range",
+		Description = "Pisunom blyat",
+		Default = 20,
+		Min = 5,
+		Max = 70,
+		Rounding = 0,
+		Callback = function(Value)
+			_G.AuraRange = Value
+		end
+    })
+
+
+    local Auras = Tabs.Main:AddToggle("MyToggle", {Title = "Kill-Aura", Default = false })
+
+    Auras:OnChanged(function(value)
+		if value then 
+			_G.Aura = true
+			while _G.Aura do 
+                if Alive() then
+                    Aura(25)
+                    task.wait(0.05)
+                end
+			end
+		else
+			_G.Aura = false
+		end 
+    end)
+
+
+    local Kill = Tabs.Misc:AddToggle("MyToggle", {Title = "Fast Kill-All", Default = false })
+
+    Kill:OnChanged(function(value)
+		if value then 
+			_G.FastKill = true
+			while _G.FastKill do 
+                if Alive() then
+                    KillAll()
+                    task.wait(0.05)
+                end
+			end
+		else
+			_G.FastKill = false
+		end 
+    end)
+
+
+    --credit
+
+    Tabs.Credit:AddParagraph({
+        Title = "Discord link",
+        Content = "Let him cock all Join pls"
+    })
+
+    Tabs.Credit:AddButton({
+        Title = "Copy Discord link",
+        Description = "cock",
+        Callback = function()
+            setclipboard("https://discord.gg/K6cNNkknQn")
+            notify("Succes","Link Coppied",5)
+        end
+    })
+
+end
+-- Addons:
+
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+notify("You bad","Touch grass(I Don't know how touch grass)",5)
+
+SaveManager:LoadAutoloadConfig()
+
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+
+
+

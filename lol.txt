@@ -19,9 +19,11 @@ end
 
 _G.Loaded = false
 
-
+local success, err = pcall(function()
 --Load menu
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+end)
 
 function Alive()
 	local char = plr.Character or plr.Character.Parent
@@ -205,7 +207,6 @@ do
 
 end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
 -- Addons:
 
 SaveManager:SetLibrary(Fluent)

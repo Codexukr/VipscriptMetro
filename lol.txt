@@ -11,6 +11,18 @@ _G.FastKill = false
 
 --local WeaponTable = {"Baseball Bat","Blood Dagger","Chainsaw","Electric Guitar","Emerald Greatsword","Frost Spear","Katana","Knife","Mace","Machete","Pan","Pencil","Scythe","Tennis Racket","Trident","War Hammer"}
 
+
+if _G.Loaded == false then
+	print("Stop Spamming Script Loaded")
+	return
+end
+
+_G.Loaded = false
+
+
+--Load menu
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+
 function Alive()
 	local char = plr.Character or plr.Character.Parent
 

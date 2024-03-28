@@ -1,0 +1,263 @@
+
+
+if _G.Loaded == false then
+	print("Stop Spamming Script Loaded")
+	return
+end
+
+_G.Loaded = false
+
+--Load menu
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+
+
+
+local players = game:GetService("Players")
+local plr = players.LocalPlayer
+
+_G.Aura = false
+_G.AuraRange =25
+
+_G.kkall =false
+_G.NoKnock = false
+
+function Alive()
+	local char = plr.Character or plr.Character.Parent
+
+	if char then
+		return char
+	end
+end 
+
+local players = game:GetService("Players")
+local plr = players.LocalPlayer
+
+
+function ClosestPlayer(range)
+	local char = plr.Character
+
+	local maxdist = range
+	local target
+
+	for i,v in ipairs(game:GetService("Players"):GetChildren()) do
+		if v.Name ~= plr.Name then
+			local EChar = v.Character 
+
+			if EChar then
+				local ETorso = EChar:FindFirstChild("Torso")
+				local EHuman = EChar:FindFirstChild("Humanoid")
+
+				local distance = (char:FindFirstChild("Torso").Position - ETorso.Position).Magnitude
+
+				if ETorso and EHuman and EHuman.Health >= 1 and not EChar:FindFirstChild("ForceField") and distance <= maxdist then
+					target = v
+				end
+				
+			end
+
+		end
+	end
+
+	return target
+end
+
+function KnockBackAura(range)
+	local success, err = pcall(function()
+		local char = plr.Character
+		local HRP = char:FindFirstChild("HumanoidRootPart")
+		local EPlr = ClosestPlayer(range)
+
+		if EPlr then
+			local TPart = EPlr.Character:FindFirstChild("Torso")
+			local THuman = EPlr.Character:FindFirstChild("Humanoid")
+
+			local KnockPercent = TPart:FindFirstChild("percentIndicator").numForTweening
+
+			if KnockPercent.Value < 295 then
+           		game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(workspace:FindFirstChild("Living"):FindFirstChild(EPlr.Name),Vector3.new(-537.9108276367188, -12.901360511779785, -109.05764770507812),Vector3.zAxis)
+			end
+		end
+		
+   	end)
+
+end
+
+function AllKnock()
+	local success, err = pcall(function()
+		for i,v in pairs(game:GetService("Players"):GetChildren()) do
+			if v.Name ~= plr.Name then        
+				local EChar = v.Character
+				local KnockPercent = EChar.Torso:FindFirstChild("percentIndicator").numForTweening
+
+				if EChar and EChar:FindFirstChild("Humanoid") and EChar:FindFirstChild("Torso") and KnockPercent.Value < 295 then 
+					game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(workspace:FindFirstChild("Living"):FindFirstChild(v.Name),Vector3.new(-537.9108276367188, -12.901360511779785, -109.05764770507812),Vector3.zAxis)
+
+				end
+
+			end 
+		end 
+	end)
+end 
+
+function NoKnockback()
+    local char =plr.Character
+    local HRP =char:FindFirstChild("HumanoidRootPart")
+    local hit = char:FindFirstChild("hitHighlight")
+
+    if HRP:FindFirstChildOfClass("LinearVelocity") then
+        print("LINEAR DETECTED")
+        HRP:FindFirstChildOfClass("LinearVelocity"):Remove()
+    end   
+
+end 
+
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+function notify(title,content,duration)
+    Fluent:Notify({Title = title,Content = content,Duration=duration, })
+end 
+
+
+local Window = Fluent:CreateWindow({
+    Title = "Project Smash",
+    SubTitle = "UI: by dawid Main:Lerazz",
+    TabWidth = 90,
+    Size = UDim2.fromOffset(450, 350),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.M
+})
+
+--https://lucide.dev/icons/ 
+local Tabs = {
+    Main = Window:AddTab({ Title = "Combat", Icon = "swords" }),
+	Misc = Window:AddTab({ Title = "Misc", Icon = "box" }),
+	Credit = Window:AddTab({ Title = "Info/Credit", Icon = "candy" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+
+    --[[
+
+                            ----COMBAT TAB----
+
+    --]]
+
+
+	Tabs.Main:AddParagraph({
+        Title = "Too Many Bugs",
+        Content = "If Knockback-Aura not work then  hit player"
+    })
+
+	local AuraRange = Tabs.Main:AddSlider("AuraRange", {
+		Title = "Aura-Range",
+		Description = "Pisunom blyat",
+		Default = 20,
+		Min = 5,
+		Max = 50,
+		Rounding = 0,
+		Callback = function(Value)
+			_G.AuraRange = Value
+		end
+    })
+	local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Knockback-Aura", Default = false })
+
+    Toggle:OnChanged(function(value)
+		if value then 
+			_G.Aura = true
+			while _G.Aura do 
+                if Alive() then			
+                    KnockBackAura(_G.AuraRange)
+                    task.wait()
+                end
+			end
+		else
+			_G.Aura = false
+		end 
+    end)
+
+	local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Knock-All", Default = false })
+
+    Toggle:OnChanged(function(value)
+		if value then 
+			_G.kkall = true
+			while _G.kkall do 
+                if Alive() then			
+					AllKnock()
+                    task.wait()
+                end
+			end
+		else
+			_G.kkall = false
+		end 
+    end)
+
+
+	Tabs.Misc:AddParagraph({
+        Title = "Warning!",
+        Content = "NoKnockback break Dash!!! :("
+    })
+	
+	local Toggle = Tabs.Misc:AddToggle("MyToggle", {Title = "NoKnockback", Default = false })
+
+    Toggle:OnChanged(function(value)
+		if value then 
+			_G.NoKnock = true
+			while _G.NoKnock do 
+                if Alive() then			
+					NoKnockback()
+                    task.wait()
+                end
+			end
+		else
+			_G.NoKnock = false
+		end 
+    end)
+
+
+	Tabs.Credit:AddParagraph({
+        Title = "Discord link",
+        Content = "Let him cock all Join pls"
+    })
+
+    Tabs.Credit:AddButton({
+        Title = "Copy Discord link",
+        Description = "cock",
+        Callback = function()
+            setclipboard("https://discord.gg/K6cNNkknQn")
+            notify("Succes","Link Coppied",5)
+        end
+    })
+
+
+end
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+-- Addons:
+
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+notify("You bad","Touch grass(I Don't know how touch grass)",5)
+
+SaveManager:LoadAutoloadConfig()
+
+
+

@@ -226,7 +226,6 @@ do
 
 end
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
 -- Addons:
 
 SaveManager:SetLibrary(Fluent)
@@ -248,4 +247,4 @@ notify("You bad","Touch grass(I Don't know how touch grass)",5)
 SaveManager:LoadAutoloadConfig()
 
 
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()

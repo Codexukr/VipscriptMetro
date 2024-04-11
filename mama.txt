@@ -4,8 +4,6 @@ if _G.Loaded == false then
 	return
 end
 
-_G.Loaded = false
-
 
 --Load menu
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
@@ -21,13 +19,16 @@ _G.AuraState = "Rage"
 --Misc
 _G.Kunai = false
 _G.Spike = false
-_G.FastKill = false
 
 --Hitbox Settings
 _G.Hitboxes = false
 _G.HitBox_Size = 20
 _G.HitBox_Transparency = 0.4
 _G.HitBox_Visual = false 
+
+--God
+
+_G.GodV = false
 
 
 
@@ -164,7 +165,7 @@ function HitboxVisual(Size,Transparency)
 
                     local weld = Instance.new("Weld",EChar:FindFirstChild("Hitbox"))
                     weld.Part0 = EChar:FindFirstChild("Hitbox")
-                    weld.Part1 = EChar:FindFirstChild("HumanoidRootPart")
+                    weld.Part1 = EChar:FindFirstChild("Torso")
 
                 else
                     EChar:FindFirstChild("Hitbox").Size = Vector3.new(Size,Size,Size)
@@ -176,6 +177,16 @@ function HitboxVisual(Size,Transparency)
     end 
 
 
+end
+
+function God(value)
+    local char = plr.Character
+    local human = char:FindFirstChild("Humanoid")
+
+
+    if human.Health > 101 then return end
+
+    char.FallDamage.Damage:FireServer(value)
 end
 
 
@@ -233,11 +244,8 @@ do
         Callback = function(Value)
             _G.AuraState = Value
             if Value == "Legit" then 
-                notify("Warning!","Legit Best Range(10)",5)
-                _G.AuraCooldown = 0
-            else 
-                _G.AuraCooldown = 0.5
-            end 
+                notify("Warning!","Set small range(auto hit)",5)
+            end
         end
     })
 
@@ -268,11 +276,6 @@ do
 			_G.Aura = false
 		end 
     end)
-
-    Tabs.Main:AddParagraph({
-        Title = "Info:",
-        Content = "Equip Kawaii Revolver or Revolver To Fast Kill"
-    })
 
 
 
@@ -314,21 +317,22 @@ do
 		end 
     end)
 
-    local FastKill = Tabs.Misc:AddToggle("MyToggle", {Title = "Fast Kill All(OP)", Default = false })
+    local GODS = Tabs.Misc:AddToggle("MyToggle", {Title = "God(Inf Health)", Default = false })
 
-    FastKill:OnChanged(function(value)
+    GODS:OnChanged(function(value)
 		if value then 
-			_G.FastKill = true
-			while _G.FastKill do 
+			_G.GodV = true
+			while _G.GodV do 
                 if Alive() then
-                    KillAll()
-                    task.wait(0.05)
+                    God(-999999)
+                    task.wait(0.5)
                 end
 			end
 		else
-			_G.FastKill = false
+			_G.GodV = false
 		end 
     end)
+
 
         --[[
 
@@ -378,7 +382,7 @@ do
 
     Tabs.Hitbox:AddParagraph({
         Title = "Hitbox Bypass(Beta)",
-        Content = "Fps drop I don't know why(Fixing..)"
+        Content = "piska"
     })
 
 
@@ -420,5 +424,21 @@ SaveManager:LoadAutoloadConfig()
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
 
+
+--[[
+function Aura(range)
+		local char = plr.Character
+		local EPlr = ClosestPlayer(range)
+
+		if EPlr then
+			local TPart = EPlr.Character:FindFirstChild("Torso")
+			local THuman = EPlr.Character:FindFirstChild("Humanoid")
+
+            HRP.CFrame = CFrame.lookAt(HRP.Position,Vector3.new(TPart.Position.X, HRP.Position.Y, TPart.Position.Z))
+        
+		end
+
+end
+-]]
 
 

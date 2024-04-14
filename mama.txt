@@ -1,3 +1,4 @@
+
 _G.Loaded = true
 if _G.Loaded == false then
 	print("Stop Spamming Script Loaded")
@@ -15,13 +16,15 @@ end)
 local plr = game:GetService("Players").LocalPlayer 
 
 --Aura Settings
-_G.Aura = false
+_G.KillAura = false
 _G.AuraRange = 30
 _G.AuraState = "Rage"
 
 --Misc
 _G.Kunai = false
 _G.Spike = false
+
+_G.kill_all = false
 
 --Hitbox Settings
 _G.Hitboxes = false
@@ -30,7 +33,6 @@ _G.HitBox_Transparency = 0.4
 _G.HitBox_Visual = false 
 
 --God
-
 _G.GodV = false
 
 
@@ -126,26 +128,33 @@ function NoKunaiDamage()
 	end 
 end
 
-function KillAll()
+function Kill_All()
+    local character = plr.Character
+
+    for i,v in pairs(plr.Backpack:GetChildren()) do
+        if v:IsA("Tool") and not string.find(v.Name,"Revolver") then
+            if v:FindFirstChild("Remotes") and v:FindFirstChild("Remotes").DamageRemote then
+                
+                v.Parent = character
+
+            end
+        end
+    end
+
+    if character:FindFirstChildOfClass("Tool") == nil then return end
+
     for i,v in pairs(game:GetService("Players"):GetChildren()) do
-        if v.Name ~= plr.Name then        
-            if plr.Backpack:FindFirstChild("Kawaii Revolver") then
-                plr.Backpack:FindFirstChild("Kawaii Revolver").Parent = plr.Character
+        if v ~= plr then
+            local e_character = v.Character 
+
+
+            if e_character and e_character:FindFirstChild("ForceField") == nil then
+                plr.Character:FindFirstChildOfClass("Tool"):FindFirstChild("Remotes"):FindFirstChild("DamageRemote"):FireServer(e_character:FindFirstChild("Humanoid"))
             end
 
-            if plr.Backpack:FindFirstChild("Revolver") then
-                plr.Backpack:FindFirstChild("Revolver").Parent = plr.Character
-            end
-            
-            if plr.Character:FindFirstChildOfClass("Tool") == nil then return end
-            if  plr.Character:FindFirstChildOfClass("Tool"):FindFirstChild("Remotes"):FindFirstChild("DamageRemote") == nil then return end
+        end
 
-			if v.Character and v.Character:FindFirstChild("Humanoid")then 
-				plr.Character:FindFirstChildOfClass("Tool"):FindFirstChild("Remotes"):FindFirstChild("DamageRemote"):FireServer(game:GetService("Players")[v.Name].Character:FindFirstChild("Humanoid"))
-			end
-
-        end 
-    end 
+    end
 end
 
 function HitboxVisual(Size,Transparency)
@@ -238,6 +247,22 @@ do
 
     --]]
 
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Aura", Default = false })
+
+    Toggle:OnChanged(function(value)
+		if value then 
+			_G.KillAura = true
+			while _G.KillAura do 
+                if Alive() then
+                    Aura(_G.AuraRange)
+                    task.wait(0.05)
+                end
+			end
+		else
+			_G.KillAura = false
+		end 
+    end)
+
   
     local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
         Title = "Aura-Mode",
@@ -264,21 +289,28 @@ do
 		end
     })
 
-	local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Aura", Default = false })
+    Tabs.Main:AddParagraph({
+        Title = "-.-.-.-.-.-.-.-.-.-.-.-.",
+        Content = "give me money pls"
+    })
 
-    Toggle:OnChanged(function(value)
+    
+    local FastKill = Tabs.Main:AddToggle("MyToggle", {Title = "Fast Kill-All", Default = false })
+
+    FastKill:OnChanged(function(value)
 		if value then 
-			_G.Aura = true
-			while _G.Aura do 
+			_G.kill_all = true
+			while _G.kill_all do 
                 if Alive() then
-                    Aura(_G.AuraRange)
-                    task.wait()
+                    Kill_All()
+                    task.wait(0.05)
                 end
 			end
 		else
-			_G.Aura = false
+			_G.kill_all = false
 		end 
     end)
+
 
 
 
@@ -337,7 +369,7 @@ do
     end)
 
 
-        --[[
+    --[[
 
                             ----HITBOX TAB----
 
@@ -424,22 +456,3 @@ Window:SelectTab(1)
 notify("You bad","Touch grass(I Don't know how touch grass)",5)
 
 SaveManager:LoadAutoloadConfig()
-
-
-
---[[
-function Aura(range)
-		local char = plr.Character
-		local EPlr = ClosestPlayer(range)
-
-		if EPlr then
-			local TPart = EPlr.Character:FindFirstChild("Torso")
-			local THuman = EPlr.Character:FindFirstChild("Humanoid")
-
-            HRP.CFrame = CFrame.lookAt(HRP.Position,Vector3.new(TPart.Position.X, HRP.Position.Y, TPart.Position.Z))
-        
-		end
-
-end
--]]
-

@@ -1,15 +1,20 @@
-_G.Loaded = true
 
 if _G.Loaded == false then
 	print("Stop Spamming Script Loaded")
 	return
 end
 _G.Loaded = false
+
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+end)
+
 local players = game:GetService("Players")
 local plr = players.LocalPlayer
 
 _G.Aura = false
-_G.AuraRange =25
+_G.Aura_Range =25
 
 _G.kkall =false
 _G.NoKnock = false
@@ -21,10 +26,6 @@ function Alive()
 		return char
 	end
 end 
-
-local players = game:GetService("Players")
-local plr = players.LocalPlayer
-
 
 function ClosestPlayer(range)
 	local char = plr.Character
@@ -96,7 +97,6 @@ function NoKnockback()
 
     if char then
         local HRP =char:FindFirstChild("HumanoidRootPart")
-        local hit = char:FindFirstChild("hitHighlight")
 
         if HRP:FindFirstChildOfClass("LinearVelocity") then
             HRP:FindFirstChildOfClass("LinearVelocity"):Remove()
@@ -106,82 +106,74 @@ function NoKnockback()
 end 
 
 
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local Window = OrionLib:MakeWindow({Name = "Project Smash(Update)", HidePremium = false, SaveConfig = false, ConfigFolder = "Orion"})
 
-function notify(title,content,duration)
-    Fluent:Notify({Title = title,Content = content,Duration=duration, })
-end 
+function Notfiy()
 
+    OrionLib:MakeNotification({
+        Name = "Orion Example",
+        Content = "Orion Example",
+        Image = "rbxassetid://4483345998",
+        Time = 5
+    })
+end
 
-local Window = Fluent:CreateWindow({
-    Title = "Project Smash",
-    SubTitle = "UI: by dawid Main:Lerazz",
-    TabWidth = 90,
-    Size = UDim2.fromOffset(450, 350),
-    Acrylic = true,
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.M
+local Combat = Window:MakeTab({
+	Name = "Combat",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
 })
 
---https://lucide.dev/icons/ 
-local Tabs = {
-    Main = Window:AddTab({ Title = "Combat", Icon = "swords" }),
-	Misc = Window:AddTab({ Title = "Misc", Icon = "box" }),
-	Credit = Window:AddTab({ Title = "Info/Credit", Icon = "candy" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
-}
+local Misc = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-local Options = Fluent.Options
+local Info = Window:MakeTab({
+	Name = "Info!!!📰",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-do
-
-    --[[
-
-                            ----COMBAT TAB----
-
-    --]]
-
-
-	Tabs.Main:AddParagraph({
-        Title = "Too Many Bugs",
-        Content = "If Knockback-Aura not work then  hit player"
-    })
-
-	local AuraRange = Tabs.Main:AddSlider("AuraRange", {
-		Title = "Aura-Range",
-		Description = "Pisunom blyat",
-		Default = 20,
-		Min = 5,
-		Max = 50,
-		Rounding = 0,
-		Callback = function(Value)
-			_G.AuraRange = Value
-		end
-    })
-	local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Knockback-Aura", Default = false })
-
-    Toggle:OnChanged(function(value)
-		if value then 
+Combat:AddToggle({
+	Name = "Knockback-Aura",
+	Default = false,
+	Callback = function(value)
+        if value then 
 			_G.Aura = true
 			while _G.Aura do 
                 if Alive() then			
-                    KnockBackAura(_G.AuraRange)
+                    KnockBackAura(_G.Aura_Range)
                     task.wait()
                 end
 			end
 		else
 			_G.Aura = false
 		end 
-    end)
+	end    
+})
 
+Combat:AddSlider({
+	Name = "Aura-Range",
+	Min = 10,
+	Max = 50,
+	Default = 20,
+	Increment = 1,
+	Callback = function(Value)
+		_G.Aura_Range = Value
+	end    
+})
 
-	local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Knock-All", Default = false })
+Combat:AddLabel("----------------------")
 
-    Toggle:OnChanged(function(value)
-		if value then 
+Combat:AddToggle({
+	Name = "Knock-All",
+	Default = false,
+	Callback = function(value)
+        if value then 
 			_G.kkall = true
 			while _G.kkall do 
                 if Alive() then			
@@ -192,18 +184,16 @@ do
 		else
 			_G.kkall = false
 		end 
-    end)
+	end    
+})
 
+-----COMBAT END -------
 
-	Tabs.Misc:AddParagraph({
-        Title = "Warning!",
-        Content = "NoKnockback break Dash!!! :("
-    })
-	
-	local Toggle = Tabs.Misc:AddToggle("MyToggle", {Title = "NoKnockback", Default = false })
-
-    Toggle:OnChanged(function(value)
-		if value then 
+Misc:AddToggle({
+	Name = "No-Knockback",
+	Default = false,
+	Callback = function(value)
+        if value then 
 			_G.NoKnock = true
 			while _G.NoKnock do 
                 if Alive() then			
@@ -214,47 +204,27 @@ do
 		else
 			_G.NoKnock = false
 		end 
-    end)
+	end    
+})
 
+-----MISC END -----------
 
-	Tabs.Credit:AddParagraph({
-        Title = "Discord link",
-        Content = "Let him cock all Join pls"
-    })
+Info:AddButton({
+	Name = "Copy invite!",
+	Callback = function()
+        setclipboard("https://discord.gg/K6cNNkknQn")
+        OrionLib:MakeNotification({
+            Name = "Succes",
+            Content = "Copied",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+        })
+  	end    
+})
 
-    Tabs.Credit:AddButton({
-        Title = "Copy Discord link",
-        Description = "cock",
-        Callback = function()
-            setclipboard("https://discord.gg/K6cNNkknQn")
-            notify("Succes","Link Coppied",5)
-        end
-    })
+Info:AddLabel("Join to my discord server! pls")
+Info:AddLabel("Send bugs!")
 
+Info:AddLabel("New features are coming in an hour!")
 
-end
--- Addons:
-
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
-SaveManager:IgnoreThemeSettings()
-SaveManager:SetIgnoreIndexes({})
-
-InterfaceManager:SetFolder("FluentScriptHub")
-SaveManager:SetFolder("FluentScriptHub/specific-game")
-
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
-
-
-Window:SelectTab(1)
-
-notify("You bad","Touch grass(I Don't know how touch grass)",5)
-
-SaveManager:LoadAutoloadConfig()
-
-
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
-
-
+OrionLib:Init() --UI Lib End

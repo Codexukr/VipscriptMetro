@@ -310,6 +310,5 @@ Info:AddButton({
 Info:AddLabel("Join to my discord server! pls")
 Info:AddLabel("Send bugs!")
 
-Info:AddLabel("New features are coming in an hour!")
 
 OrionLib:Init() --UI Lib End

@@ -10,6 +10,7 @@ local success, err = pcall(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
 end)
 
+
 local players = game:GetService("Players")
 local plr = players.LocalPlayer
 
@@ -18,6 +19,31 @@ _G.Aura_Range =25
 
 _G.kkall =false
 _G.NoKnock = false
+
+_G.Inf_Jump = false
+
+_G.SpeedTogg = false
+_G.Speed_Value = 16
+
+
+local JumpConnection
+local WalkSpeedConnection
+
+function HumanoidChanger()
+	local character = plr.Character
+	local Hm = character:FindFirstChild("Humanoid")
+
+	local value = {}
+
+	function value:WalkSpeedV(speed)
+		Hm.WalkSpeed = speed
+	end
+	
+	return value
+end
+
+local HmChange = HumanoidChanger()
+
 
 function Alive()
 	local char = plr.Character or plr.Character.Parent
@@ -33,7 +59,7 @@ function ClosestPlayer(range)
 	local maxdist = range
 	local target
 
-	for i,v in pairs(game:GetService("Players"):GetChildren()) do
+	for _,v in pairs(players:GetPlayers()) do
 		if v.Name ~= plr.Name then
 			local EChar = v.Character 
 
@@ -42,9 +68,9 @@ function ClosestPlayer(range)
 				local EHuman = EChar:FindFirstChild("Humanoid")
 
 				local distance = (char:FindFirstChild("Torso").Position - ETorso.Position).Magnitude
-                local KnockPercent = EChar.Torso:FindFirstChild("percentIndicator").numForTweening
+                
 
-				if ETorso and EHuman and EHuman.Health >= 1 and not EChar:FindFirstChild("ForceField") and distance <= maxdist and KnockPercent.Value < 295 then
+				if ETorso and EHuman and distance <= maxdist then
 					target = v
 				end
 				
@@ -58,20 +84,21 @@ end
 
 function KnockBackAura(range)
 	local success, err = pcall(function()
-		local char = plr.Character
-		local HRP = char:FindFirstChild("HumanoidRootPart")
 		local EPlr = ClosestPlayer(range)
 
 		if EPlr then
 			local TPart = EPlr.Character:FindFirstChild("Torso")
-			local THuman = EPlr.Character:FindFirstChild("Humanoid")
 
-           	game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(workspace:FindFirstChild("Living"):FindFirstChild(EPlr.Name),Vector3.new(-537.9108276367188, -12.901360511779785, -109.05764770507812),Vector3.zAxis)
+			local KnockPercent = TPart:FindFirstChild("percentIndicator").numForTweening
+
+			if KnockPercent.Value < 295 then
+           		game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("koReflect"):FireServer(workspace:FindFirstChild("Living"):FindFirstChild(EPlr.Name),Vector3.new(-537.9108276367188, -12.901360511779785, -109.05764770507812),Vector3.zAxis)
+			end
 		end
 		
    	end)
-
 end
+
 
 function AllKnock()
 	local success, err = pcall(function()
@@ -105,6 +132,15 @@ function NoKnockback()
 
 end 
 
+function InfJump()
+	JumpConnection = game:GetService("UserInputService").JumpRequest:Connect(function()
+		if _G.Inf_Jump then
+			game:GetService "Players".LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
+		else
+			JumpConnection:Disconnect()
+		end
+	end)
+end 
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
@@ -167,6 +203,8 @@ Combat:AddSlider({
 	end    
 })
 
+
+
 Combat:AddLabel("----------------------")
 
 Combat:AddToggle({
@@ -206,6 +244,53 @@ Misc:AddToggle({
 		end 
 	end    
 })
+
+Misc:AddToggle({
+	Name = "Inf-Jump",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Inf_Jump = true
+			InfJump()
+		else
+			_G.Inf_Jump = false
+		end 
+	end    
+})
+
+Misc:AddLabel("walk foward to change speed")
+
+Misc:AddToggle({
+	Name = "Change-Speed",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.SpeedTogg = true
+			WalkSpeedConnection = plr.Character:FindFirstChild("Humanoid"):GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+				if _G.SpeedTogg ~= true then WalkSpeedConnection:Disconnect() end
+				HmChange:WalkSpeedV(_G.Speed_Value)
+			end)
+		else
+			_G.SpeedTogg = false
+		end 
+	end    
+})
+
+Misc:AddSlider({
+	Name = "WalkSpeed",
+	Min = 16,
+	Max = 100,
+	Default = 16,
+	Color = Color3.fromRGB(25,255,255),
+	Increment = 1,
+	ValueName = "Value",
+	Callback = function(Value)
+		_G.Speed_Value = Value
+	end    
+})
+
+
+
 
 -----MISC END -----------
 

@@ -10,24 +10,11 @@ end
 _G.Loaded = false
 
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Project Smash(Update)",IntroText = "NEW UPDATE!!", HidePremium = false, SaveConfig = false, ConfigFolder = "Orion"})
-
-function Notify(name,content,time)
-
-    OrionLib:MakeNotification({
-        Name = name,
-        Content = content,
-        Image = "rbxassetid://4483345998",
-        Time = time
-    })
-end
 
 local success, err = pcall(function()
     local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
 
     if string.find(GetName.Name,"Duels") then
-        Notify("Duels Detected","menu loading removed!",5)
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))() -- remove menu to fast load
     else
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
@@ -170,6 +157,19 @@ end
 -----------------------UI LIBRARY---------------------------
 
 ------------------------------------------------------------
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Project Smash(Update)",IntroText = "NEW UPDATE!!", HidePremium = false, SaveConfig = false, ConfigFolder = "Orion"})
+
+function Notify(name,content,time)
+
+    OrionLib:MakeNotification({
+        Name = name,
+        Content = content,
+        Image = "rbxassetid://4483345998",
+        Time = time
+    })
+end
 
 Notify("New update!!!","Check News",5)
 

@@ -1,13 +1,38 @@
+repeat
+    print("loaded")   
+until game:IsLoaded()
 
+--[[
 if _G.Loaded == false then
 	print("Stop Spamming Script Loaded")
 	return
 end
 _G.Loaded = false
+--]]
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Project Smash(Update)",IntroText = "NEW UPDATE!!", HidePremium = false, SaveConfig = false, ConfigFolder = "Orion"})
+
+function Notify(name,content,time)
+
+    OrionLib:MakeNotification({
+        Name = name,
+        Content = content,
+        Image = "rbxassetid://4483345998",
+        Time = time
+    })
+end
 
 local success, err = pcall(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+    local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+
+    if string.find(GetName.Name,"Duels") then
+        Notify("Duels Detected","menu loading removed!",5)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))() -- remove menu to fast load
+    else
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+    end
 end)
 
 
@@ -142,19 +167,11 @@ function InfJump()
 	end)
 end 
 
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+-----------------------UI LIBRARY---------------------------
 
-local Window = OrionLib:MakeWindow({Name = "Project Smash(Update)", HidePremium = false, SaveConfig = false, ConfigFolder = "Orion"})
+------------------------------------------------------------
 
-function Notfiy()
-
-    OrionLib:MakeNotification({
-        Name = "Orion Example",
-        Content = "Orion Example",
-        Image = "rbxassetid://4483345998",
-        Time = 5
-    })
-end
+Notify("New update!!!","Check News",5)
 
 local Combat = Window:MakeTab({
 	Name = "Combat",
@@ -308,7 +325,9 @@ Info:AddButton({
 })
 
 Info:AddLabel("Join to my discord server! pls")
-Info:AddLabel("Send bugs!")
 
+Info:AddLabel("-----------CHANGELOGS-----------")
+Info:AddLabel("[+]:Duels support")
+Info:AddLabel("[/]:add script to auto-execute for fast loading")
 
 OrionLib:Init() --UI Lib End

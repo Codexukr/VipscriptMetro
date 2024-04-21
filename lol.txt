@@ -1,33 +1,109 @@
+
 if _G.Loaded == false then
 	print("Stop Spamming Script Loaded")
 	return
 end
 _G.Loaded = false
 
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+end)
+
+
 local players = game:GetService("Players")
 local lp = players.LocalPlayer
 
+local uis = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
 
 --KillAura Setting
-_G.Aura =false
+_G.KillAura =false
+_G.KillAura_Esp = false
+
 _G.AuraRange = 25
 
+_G.KillAura_Box = true
+
 --Misc 
-_G.FastKill = false
+_G.Infinite_Dash = false
+_G.Dash_Delay = 0.1
 
 --HitboxExpander
 _G.Hitbox_Size = 15
 _G.HitBox_Transparency = 0.4
 _G.Hitbox = true
 
+--localplayer
+_G.T_Speed = true
+_G.T_Jump = true
+
+_G.LP_Speed = 16
+_G.LP_Jump = 50
+
+local movementConnection 
+
 
 --local WeaponTable = {"Baseball Bat","Blood Dagger","Chainsaw","Electric Guitar","Emerald Greatsword","Frost Spear","Katana","Knife","Mace","Machete","Pan","Pencil","Scythe","Tennis Racket","Trident","War Hammer"}
+function DrawTarget(p)
+	local char = lp.Character
 
-local success, err = pcall(function()
-    --Load menu
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
-end)
+	local PCharacter= p.Character
+	local PHumanoid = PCharacter:FindFirstChild("Humanoid")
+
+	if PCharacter:FindFirstChild("Torso"):FindFirstChild("Boba") == nil then
+
+		local part = Instance.new("Part")
+		part.Parent = PCharacter:FindFirstChild("Torso")
+		part.Name = "Boba"
+		part.BrickColor = BrickColor.new("Lime green")
+		part.Material = "ForceField"
+		part.Size = Vector3.new(8,8,8)
+		part.Position = PCharacter:FindFirstChild("Torso").Position
+		part.CanCollide = false
+		part.CanQuery = false
+		part.CanTouch = false
+		part.Anchored = false
+		part.Massless = true
+		part.Shape = "Ball"
+
+		local weld = Instance.new("Weld", part)
+		weld.Part0 = PCharacter:FindFirstChild("Torso")
+		weld.Part1 = part
+	end
+
+	function RDraw()
+		if PCharacter:FindFirstChild("Torso"):FindFirstChild("Boba") then
+			PCharacter:FindFirstChild("Torso"):FindFirstChild("Boba"):Remove()
+		end
+	end
+
+	local c1
+
+	c1 = RunService.Heartbeat:Connect(function()
+		if char:FindFirstChildOfClass("Tool") == nil then
+			c1:Disconnect()
+			RDraw()
+		end
+
+		local distance = (char:FindFirstChild("Torso").Position - PCharacter:FindFirstChild("Torso").Position).Magnitude
+
+		if PHumanoid.Health < 1 then
+			c1:Disconnect()
+			RDraw()
+		end
+
+		if distance >= _G.AuraRange then
+			c1:Disconnect()
+			RDraw()
+		end
+
+	end)
+
+end
+
+
+
 
 function Alive()
 	local char = lp.Character or lp.Character.Parent
@@ -37,17 +113,13 @@ function Alive()
 	end
 end 
 
-function KitEquip(Kit)
-    game:GetService("Players").LocalPlayer.PlayerGui["Menu Screen"].RemoteEvent:FireServer(Kit)
-end
-
 function ClosestPlayer(range)
 	local char = lp.Character
 
 	local maxdist = range
 	local target
 
-	for i,v in ipairs(game:GetService("Players"):GetChildren()) do
+	for i,v in pairs(game:GetService("Players"):GetChildren()) do
 		if v.Name ~= lp.Name then
 			local EChar = v.Character 
 
@@ -73,24 +145,68 @@ function Aura(range)
     local char = lp.Character
 
 	local success, err = pcall(function()
-		local EPlr = ClosestPlayer(range)
 
+		local EPlr = ClosestPlayer(range)
+		
 		if EPlr then
 			local TPart = EPlr.Character:FindFirstChild("Torso")
 			local THuman = EPlr.Character:FindFirstChild("Humanoid")
 
             if char:FindFirstChildOfClass("Tool") == nil then return end -- check tool   
-        
+			if char:FindFirstChildOfClass("Tool"):FindFirstChild("DamageRemote") == nil then return end -- checking remote
+			if char:FindFirstChildOfClass("Tool").Name == "Kawaii Revolver" then return end 
+		
+			if _G.KillAura_Esp then
+            	DrawTarget(EPlr)
+			end
             char:FindFirstChildOfClass("Tool"):FindFirstChild("DamageRemote"):FireServer(THuman)           
 		end
 		
-   	end)
 
+	end)
+end
+
+function KitEquip(Kit)
+    lp.PlayerGui["Menu Screen"].RemoteEvent:FireServer(Kit)
 end
 
 function FreeGamepass(user)
     lp.UserId = user
 end 
+
+function AC_Disable()
+	if lp.Character and lp.Character:FindFirstChild("LocalScript") and lp.Character:FindFirstChild("LocalScript").Enabled ~= false then
+		lp.Character:FindFirstChild("LocalScript").Enabled = false
+	end
+end
+
+function InfDash()
+	local movementLS = lp.PlayerGui.Sprinting.Sprinting
+	local debounce = true
+
+	if movementLS then
+		movementConnection = uis.InputBegan:Connect(function(input)
+			if input.KeyCode == Enum.KeyCode.E then
+				if _G.Infinite_Dash == false then
+					movementConnection:Disconnect()
+					print("Discoonected")
+				end
+
+				if debounce ~= true then return end
+				
+				debounce = false
+				
+				movementLS.Enabled = false
+				movementLS.Enabled = true
+
+				task.wait(_G.Dash_Delay)
+				
+				debounce = true
+			end	
+		end)
+	end
+
+end
 
 
 function HitboxExpander(size,transparecny)
@@ -111,155 +227,264 @@ function HitboxExpander(size,transparecny)
 end 
 
 
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+-----------------------UI LIBRARY---------------------------
 
-function notify(title,content,duration)
-    Fluent:Notify({Title = title,Content = content,Duration=duration, })
-end 
+------------------------------------------------------------
 
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "CHAOS(KATANA)",IntroText = "goffy uh", HidePremium = false, SaveConfig = false, ConfigFolder = "Orion"})
 
-local Window = Fluent:CreateWindow({
-    Title = "Chaos(Remastered)",
-    SubTitle = "UI: by dawid Main:Lerazz",
-    TabWidth = 90,
-    Size = UDim2.fromOffset(450, 350),
-    Acrylic = true,
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.M
+function Notify(name,content,time)
+
+    OrionLib:MakeNotification({
+        Name = name,
+        Content = content,
+        Image = "rbxassetid://4483345998",
+        Time = time
+    })
+end
+
+Notify("New update!!!","Check News",5)
+
+local Combat = Window:MakeTab({
+	Name = "Combat",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
 })
 
---https://lucide.dev/icons/ 
-local Tabs = {
-    Main = Window:AddTab({ Title = "Combat", Icon = "swords" }),
-    Misc = Window:AddTab({ Title = "Misc", Icon = "hammer" }),
-    HitboxExp = Window:AddTab({ Title = "Hitbox-Expander", Icon = "box" }),
-    Credit = Window:AddTab({ Title = "Info/Credit", Icon = "apple" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
-}
+local Misc = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-local Options = Fluent.Options
+local HitboxExpand = Window:MakeTab({
+	Name = "Hitbox",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-do
+local LPlayer = Window:MakeTab({
+	Name = "Local-Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-    local AuraRange = Tabs.Main:AddSlider("Kil", {
-		Title = "Kill-Aura Range",
-		Description = "Pisunom blyat",
-		Default = 20,
-		Min = 5,
-		Max = 70,
-		Rounding = 0,
-		Callback = function(Value)
-			_G.AuraRange = Value
-		end
-    })
+local Info = Window:MakeTab({
+	Name = "NEWS!!!",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 
-
-    local Auras = Tabs.Main:AddToggle("MyToggle", {Title = "Kill-Aura", Default = false })
-
-    Auras:OnChanged(function(value)
+Combat:AddToggle({
+	Name = "Kill-Aura",
+	Default = false,
+	Callback = function(value)
 		if value then 
-			_G.Aura = true
-			while _G.Aura do 
+			_G.KillAura = true
+			while _G.KillAura do 
                 if Alive() then
                     Aura(_G.AuraRange)
                     task.wait(0.05)
                 end
 			end
 		else
-			_G.Aura = false
+			_G.KillAura = false
 		end 
-    end)
+	end    
+})
 
-    Tabs.Main:AddParagraph({
-        Title = "Info:",
-        Content = "Kawaii Revolver (Fixed)"
-    })
+Combat:AddToggle({
+	Name = "Kill-Aura Esp",
+	Default = false,
+	Callback = function(value)
+		if value then 
+			_G.KillAura_Esp = true
+		else
+			_G.KillAura_Esp = false
+		end 
+	end    
+})
+
+Combat:AddSlider({
+	Name = "Kill-Aura Range",
+	Min = 10,
+	Max = 60,
+	Default = 20,
+	Increment = 1,
+	Callback = function(Value)
+		_G.AuraRange = Value
+	end    
+})
+
+Combat:AddLabel("Equip pencil to fast kill")
+
+---- COMBAT END--------
+
+Misc:AddButton({
+	Name = "Free gamepass",
+	Callback = function()
+		FreeGamepass("2205774994")
+  	end    
+})
+
+Misc:AddToggle({
+	Name = "Inf-Dash",
+	Default = false,
+	Callback = function(value)
+		if value then 
+			_G.Infinite_Dash = true
+			if Alive() then
+				InfDash()
+			end
+		else
+			_G.Infinite_Dash = false
+		end 
+	end    
+})
+
+Misc:AddSlider({
+	Name = "Dash-Delay",
+	Min = 0.4,
+	Max = 2,
+	Default = 0.5,
+	Increment = 0.1,
+	Callback = function(Value)
+		_G.Dash_Delay = Value
+	end    
+})
+
+Misc:AddLabel("Spam E!!")
 
 
-    Tabs.Misc:AddButton({
-        Title = "Free gamepass",
-        Description = "Very important button",
-        Callback = function()
-            FreeGamepass("2205774994")
-        end
-    })
+---- MISC END-------------
 
-    local Kill = Tabs.HitboxExp:AddToggle("MyToggle", {Title = "Hitbox-Expand", Default = false })
-
-    Kill:OnChanged(function(value)
+HitboxExpand:AddToggle({
+	Name = "Hitbox-Expand",
+	Default = false,
+	Callback = function(value)
 		if value then 
 			_G.Hitbox = true
 			while _G.Hitbox do 
                 if Alive() then
-                    HitboxExpander(_G.HitboxSize,_G.HitBox_Transparency)
+                    HitboxExpander(_G.Hitbox_Size,_G.HitBox_Transparency)
                     task.wait(1)
                 end
 			end
 		else
 			_G.Hitbox = false
 		end 
-    end)
+	end    
+})
 
-    local AuraRange = Tabs.HitboxExp:AddSlider("Kil", {
-		Title = "Hitbox-Size",
-		Description = "Pisunom blyat",
-		Default = 20,
-		Min = 3,
-		Max = 50,
-		Rounding = 0,
-		Callback = function(Value)
-			_G.HitboxSize = Value
-		end
-    })
-    local AuraRange = Tabs.HitboxExp:AddSlider("Kil", {
-		Title = "Hitbox-Transparency",
-		Description = "Pisunom blyat",
-		Default = 0.4,
-		Min = 0,
-		Max = 1,
-		Rounding = 1,
-		Callback = function(Value)
-			_G.HitBox_Transparency = Value
-		end
-    })
+HitboxExpand:AddSlider({
+	Name = "Hitbox-Size",
+	Min = 3,
+	Max = 50,
+	Default = 10,
+	Increment = 1,
+	Callback = function(Value)
+		_G.Hitbox_Size= Value
+	end    
+})
+
+HitboxExpand:AddSlider({
+	Name = "Hitbox-Transparency",
+	Min = 0.1,
+	Max = 0.9,
+	Default = 0.4,
+	Increment = 0.1,
+	Callback = function(Value)
+		_G.HitBox_Transparency = Value
+	end    
+})
+
+------- HITBOX END-------------
+
+LPlayer:AddToggle({
+	Name = "Loop-WalkSpeed",
+	Default = false,
+	Callback = function(value)
+		if value then 
+			_G.T_Speed = true
+			while _G.T_Speed do
+				AC_Disable()
+				if Alive() then
+					lp.Character:FindFirstChild("Humanoid").WalkSpeed = _G.LP_Speed
+				end
+				task.wait(1)
+			end
+		else
+			_G.T_Speed = false
+		end 
+	end    
+})
+
+LPlayer:AddToggle({
+	Name = "Loop-JumpPower",
+	Default = false,
+	Callback = function(value)
+		if value then 
+			_G.T_Jump = true
+			while _G.T_Jump do
+				AC_Disable()
+				if Alive() then
+					lp.Character:FindFirstChild("Humanoid").JumpPower = _G.LP_Jump
+				end
+				task.wait(1)
+			end
+		else
+			_G.T_Jump = false
+		end 
+	end    
+})
+
+LPlayer:AddSlider({
+	Name = "Speed-Value",
+	Min = 16,
+	Max = 100,
+	Default = 16,
+	Increment = 1,
+	Callback = function(Value)
+		AC_Disable()
+		_G.LP_Speed = Value
+		lp.Character:FindFirstChild("Humanoid").WalkSpeed = Value
+	end
+})
+
+LPlayer:AddSlider({
+	Name = "JumpPower-Value",
+	Min = 50,
+	Max = 250,
+	Default = 50,
+	Increment = 2,
+	Callback = function(Value)
+		AC_Disable()
+		_G.LP_Jump= Value
+		lp.Character:FindFirstChild("Humanoid").JumpPower = Value
+	end    
+})
+
+
+LPlayer:AddLabel("Anti-Cheat - Disabled")
 
 
 
-    --credit
-
-    Tabs.Credit:AddParagraph({
-        Title = "Discord link",
-        Content = "Let him cock all Join pls"
-    })
-
-    Tabs.Credit:AddButton({
-        Title = "Copy Discord link",
-        Description = "cock",
-        Callback = function()
-            setclipboard("https://discord.gg/K6cNNkknQn")
-            notify("Succes","Link Coppied",5)
-        end
-    })
-
-end
--- Addons:
-
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
-SaveManager:IgnoreThemeSettings()
-SaveManager:SetIgnoreIndexes({})
-
-InterfaceManager:SetFolder("FluentScriptHub")
-SaveManager:SetFolder("FluentScriptHub/specific-game")
-
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
 
 
-Window:SelectTab(1)
+Info:AddButton({
+	Name = "Copy invite!",
+	Callback = function()
+        setclipboard("https://discord.gg/K6cNNkknQn")
+        OrionLib:MakeNotification({
+            Name = "Succes",
+            Content = "Copied",
+            Image = "rbxassetid://4483345998",
+            Time = 5
+        })
+  	end    
+})
 
-notify("You bad","Touch grass(I Don't know how touch grass)",5)
+Info:AddLabel("Join to my discord server! pls")
 
-SaveManager:LoadAutoloadConfig()
+Info:AddLabel("I hate doing visuals >:(")

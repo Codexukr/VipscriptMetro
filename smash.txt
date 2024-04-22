@@ -222,7 +222,7 @@ Combat:AddSlider({
 
 
 
-Combat:AddLabel("----------------------")
+Combat:AddLabel("Knock All and Kill-aura not working(Fixing...)")
 
 Combat:AddToggle({
 	Name = "Knock-All",

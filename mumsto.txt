@@ -6,6 +6,46 @@ _G.Loaded = false
 
 local lp = game:GetService("Players").LocalPlayer
 
+local Sport_cloth_PriceTable = {
+    -- Min price
+    ["Красная Футболка 'Demix'"] = 1000 ,
+    ["Белая Футболка 'Puma'"] = 1500,
+    ["Серый Жилет 'Moncler'"] = 33000,
+    ["Чёрные Джоггеры 'Puma'"] = 1400,
+    ["Оранжевая Тренажёрная Куртка 'Nike'"] = 5700,
+    ["Чёрная Тренажёрная Куртка 'Nike'"] = 5700,
+    ["Бежевая Тренажёрная Куртка 'Nike'"] =5500,
+    ["Серая Худи 'Rebook'"] = 2900,
+    ["Чёрная Куртка 'Rebook'"] = 3500,
+    ["Чёрные Спортивные Штаны 'Puma'"] = 1400,
+    ["Спортивные Штаны 'Nike'"] = 1200,
+    ["Серые Спортивные Брюки"] = 1400,
+    ["Спортивные Штаны 'Polo'"] =1200,
+    ["Чёрные Спортивные Штаны 'Adidas'"] = 2500,
+    ["Чёрная Спортивная Джинсовка 'Puma'"] = 2200
+ 
+} 
+ 
+ 
+ 
+ 
+local Sport_cloth_NameTable = {
+    "Красная Футболка 'Demix'",
+    "Белая Футболка 'Puma'",
+    "Серый Жилет 'Moncler'",
+    "Чёрные Джоггеры 'Puma'",
+    "Оранжевая Тренажёрная Куртка 'Nike'",
+    "Чёрная Тренажёрная Куртка 'Nike'",
+    "Бежевая Тренажёрная Куртка 'Nike'",
+    "Серая Худи 'Rebook'",
+    "Чёрная Куртка 'Rebook'",
+    "Чёрные Спортивные Штаны 'Puma'",
+    "Спортивные Штаны 'Nike'",
+    "Серые Спортивные Брюки",
+    "Спортивные Штаны 'Polo'",
+    "Чёрные Спортивные Штаны 'Adidas'",
+    "Чёрная Спортивная Джинсовка 'Puma'"
+}
 
 -- Auto-Sell requires
 local getPlayerData = game:GetService("ReplicatedStorage"):FindFirstChild("GameNetwork"):FindFirstChild("ServerNetwork"):FindFirstChild("GetPlayerData");

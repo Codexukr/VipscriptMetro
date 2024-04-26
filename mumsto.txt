@@ -105,7 +105,6 @@ function Cloth(PriceTable,NameTable)
          
             if ClothPrice ~= nil and ClothName ~= nil and ClothEsp ~= nil then
                 if v.ProximityPrompt.ActionText ~= "Повесить" and ClothEsp:FindFirstChild("BoxHandleAdornment") == nil and table.find(NameTable,ClothName) and tonumber(ClothPrice) <= PriceTable[ClothName] then
-                    print(ClothName)
                     DrawEsp(ClothEsp)
                 end
           

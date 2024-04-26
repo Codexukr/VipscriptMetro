@@ -1,0 +1,179 @@
+-------------SportMaster END-------------------
+
+local lp = game:GetService("Players").LocalPlayer
+
+
+-- Auto-Sell requires
+local getPlayerData = game:GetService("ReplicatedStorage"):FindFirstChild("GameNetwork"):FindFirstChild("ServerNetwork"):FindFirstChild("GetPlayerData");
+local sellClothing = game:GetService("ReplicatedStorage"):FindFirstChild("GameNetwork"):FindFirstChild("ServerNetwork"):FindFirstChild("SellClothing");
+
+local itemsSold = 0;
+local sellDelay = 5;
+
+--- TOGGLES
+_G.Auto_Sell = false
+--Esp Stores
+_G.YourClth = false
+_G.Sport_Master = false
+
+
+
+
+function getchar()
+	local character = lp.Character
+	if character then
+		return character
+	end
+end
+
+function DrawEsp(cloth)
+	local Draw = Instance.new("BoxHandleAdornment")
+	
+	Draw.Parent = cloth
+	Draw.Adornee = cloth
+    Draw.Color3 = Color3.fromRGB(255, 0, 85)
+    Draw.AlwaysOnTop = true
+    Draw.ZIndex = 0
+    Draw.Transparency = 0.3
+    Draw.Size = Vector3.new(1,2,0.2)
+
+
+end
+
+
+function Cloth(PriceTable,NameTable)
+  
+
+    for i, v in pairs(game:GetService("Workspace").World.Debris.Stores:GetDescendants()) do
+        if v:FindFirstChildOfClass("ProximityPrompt") and v:FindFirstChildOfClass("ProximityPrompt").HoldDuration == 1  then
+            local ClothPrice = string.gsub(v.ProximityPrompt.ActionText,"%D+","")
+            local ClothName = v.ProximityPrompt.ObjectText
+            local ClothEsp = v.Clothing
+
+            
+
+            if v.ProximityPrompt.ActionText == "Повесить" and ClothEsp:FindFirstChild("BoxHandleAdornment") then
+                ClothEsp.BoxHandleAdornment:Remove()
+            end
+         
+            if ClothPrice ~= nil and ClothName ~= nil and ClothEsp ~= nil then
+                if v.ProximityPrompt.ActionText ~= "Повесить" and ClothEsp:FindFirstChild("BoxHandleAdornment") == nil and table.find(NameTable,ClothName) and tonumber(ClothPrice) <= PriceTable[ClothName] then
+                    print(ClothName)
+                    DrawEsp(ClothEsp)
+                end
+          
+            end
+    
+
+        end
+    end
+end
+
+function AutoSell()
+
+    if itemsSold >= 10 then
+        task.wait(5);
+        itemsSold = 0;
+    end
+    
+    local playerData = getPlayerData:InvokeServer();
+    
+    for name,data in pairs(playerData) do
+        if name ~= "Inventory" or type(data) ~= "table" then 
+            continue;
+        end
+        
+        for _,itemData in pairs(data) do
+            local itemName = itemData["ItemName"];
+            local itemHash = itemData["ItemHash"];
+            local itemPrice = itemData["Price"];
+        
+            if itemName == nil or itemHash == nil or itemPrice == nil then
+                continue;
+            end
+        
+            sellClothing:InvokeServer(itemHash);
+            itemsSold += 1;
+            
+        end
+    end
+
+    
+
+end
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Casual-Stock",IntroText = "NEW UPDATE!!", HidePremium = false, SaveConfig = false, ConfigFolder = "Orion"})
+
+function Notify(name,content,time)
+
+    OrionLib:MakeNotification({
+        Name = name,
+        Content = content,
+        Image = "rbxassetid://4483345998",
+        Time = time
+    })
+end
+
+Notify("chuwawa","L",5)
+
+local Misc = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Esp = Window:MakeTab({
+	Name = "Cloth-Esp",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+
+Misc:AddToggle({
+	Name = "Auto-Sell Clothes ",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Auto_Sell = true
+			while _G.Auto_Sell do
+                AutoSell()
+                task.wait(sellDelay)
+            end         
+		else
+			_G.Auto_Sell = false
+		end 
+	end    
+})
+
+Esp:AddToggle({
+	Name = "Sport-Master Esp",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Sport_Master = true
+			while _G.Sport_Master do
+                Cloth(Sport_cloth_PriceTable,Sport_cloth_NameTable)
+                task.wait(3)
+            end         
+		else
+			_G.Sport_Master = false
+		end 
+	end    
+})
+
+Esp:AddToggle({
+	Name = "Your-Clothes Esp",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.YourClth = true
+			while _G.YourClth do
+                Cloth(Your_cloth_PriceTable,Your_cloth_NameTable)
+                task.wait(3)
+            end         
+		else
+			_G.YourClth = false
+		end 
+	end    
+})

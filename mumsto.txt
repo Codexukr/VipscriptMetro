@@ -1,11 +1,11 @@
+
 if _G.Loaded == false then
 	print("Stop Spamming Script Loading...")
 	return
 end
 _G.Loaded = false
 
-local lp = game:GetService("Players").LocalPlayer
-
+--SportMaster table
 local Sport_cloth_PriceTable = {
     -- Min price
     ["Красная Футболка 'Demix'"] = 1000 ,
@@ -23,12 +23,12 @@ local Sport_cloth_PriceTable = {
     ["Спортивные Штаны 'Polo'"] =1200,
     ["Чёрные Спортивные Штаны 'Adidas'"] = 2500,
     ["Чёрная Спортивная Джинсовка 'Puma'"] = 2200
- 
+
 } 
- 
- 
- 
- 
+
+
+
+
 local Sport_cloth_NameTable = {
     "Красная Футболка 'Demix'",
     "Белая Футболка 'Puma'",
@@ -47,6 +47,92 @@ local Sport_cloth_NameTable = {
     "Чёрная Спортивная Джинсовка 'Puma'"
 }
 
+-------------SportMaster END-------------------
+
+
+--Adidas table
+local Adidas_cloth_PriceTable = {
+    -- Min price
+    ["Серая Футболка Logo 'Adidas'"] = 3300,
+    ["Лаймовая Кофта White 'Adidas'"] = 3300,
+    ["Красная Спортивка White 'Adidas'"] = 3300,
+    ["Белая Футболка Pinstripe 'Adidas'"] = 2185,
+    ["Синяя Футболка Logo 'Adidas'"] = 3000,
+    ["Тёмно Синяя Кофта 'Adidas'"] = 2660,
+    ["Белая Футболка Tricolor Germany 'Adidas'"] = 10735,
+    ["Черное Худи 'Adidas'"] = 5950,
+    ["Белое Поло 'Adidas'"] = 4050,
+    ["Серая Спортивка White 'Adidas'"] = 25100,
+    ["Белый Свитер Black 'Adidas'"] = 4500
+} 
+
+local Adidas_cloth_NameTable = {
+    "Серая Футболка Logo 'Adidas'",
+    "Лаймовая Кофта White 'Adidas'",
+    "Красная Спортивка White 'Adidas'",
+    "Белая Футболка Pinstripe 'Adidas'",
+    "Синяя Футболка Logo 'Adidas'",
+    "Тёмно Синяя Кофта 'Adidas'",
+    "Белая Футболка Tricolor Germany 'Adidas'",
+    "Черное Худи 'Adidas'",
+    "Белое Поло 'Adidas'",
+    "Серая Спортивка White 'Adidas'",
+    "Белый Свитер Black 'Adidas'"
+
+}
+
+--Adidas table END----------------------------
+
+
+--Bape table
+local Bape_cloth_PriceTable = {
+    -- Min price
+    ["Black Зип-Худи 'Baby Milo'"] = 43000,
+    ["Бежевый Зип-Худи 'Bape'"] = 48000,
+    ["Gray Зип-Худи 'Bape'"] = 43000,
+    ["Рюкзак 'Bape'"] = 99000,
+    ["Серый Свитшот Bape 'STA'"] = 18500,
+    ["Чёрный С Bape 'STA'"] = 30000,
+    ["Синий Зип-Худи Bape 'STA'"] = 24000,
+    ["Белая Футболка 'Bape'"] = 10200,
+    ["Чёрная Футболка Bape x Baby 'Milo'"] = 5400,
+    ["Жёлтая Футболка 'Bape'"] = 9200,
+    ["Красная Футболка 'Bape'"] = 10800,
+    ["Белая Футболка Bape 'STA'"] = 10500,
+    ["Лонгслив 'Bape'"] = 24000,
+    ["Фиолетовый зип худи 'Bape'"] = 35000
+
+} 
+
+local Bape_cloth_NameTable = {
+    "Black Зип-Худи 'Baby Milo'",
+    "Бежевый Зип-Худи 'Bape'",
+    "Gray Зип-Худи 'Bape'",
+    "Рюкзак 'Bape'",
+    "Серый Свитшот Bape 'STA'",
+    "Чёрный С Bape 'STA'",
+    "Синий Зип-Худи Bape 'STA'",
+    "Белая Футболка 'Bape'",
+    "Чёрная Футболка Bape x Baby 'Milo'",
+    "Жёлтая Футболка 'Bape'",
+    "Красная Футболка 'Bape'",
+    "Белая Футболка Bape 'STA'",
+    "Лонгслив 'Bape'",
+    "Фиолетовый зип худи 'Bape'"
+
+}
+
+--Bape table END----------------------------
+
+
+
+local lp = game:GetService("Players").LocalPlayer
+
+local success, err = pcall(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
+end)
+
 -- Auto-Sell requires
 local getPlayerData = game:GetService("ReplicatedStorage"):FindFirstChild("GameNetwork"):FindFirstChild("ServerNetwork"):FindFirstChild("GetPlayerData");
 local sellClothing = game:GetService("ReplicatedStorage"):FindFirstChild("GameNetwork"):FindFirstChild("ServerNetwork"):FindFirstChild("SellClothing");
@@ -57,14 +143,13 @@ local sellDelay = 5;
 --- TOGGLES
 _G.Auto_Sell = false
 --Esp Stores
-_G.YourClth = false
+_G.Esp = false
+
 _G.Sport_Master = false
+_G.Adidas = false
+_G.Bape = false
 
 
-local success, err = pcall(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/Secret.txt"))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Venograde/Vino/main/menu.txt"))()
-end)
 
 function getchar()
 	local character = lp.Character
@@ -92,12 +177,10 @@ function Cloth(PriceTable,NameTable)
   
 
     for i, v in pairs(game:GetService("Workspace").World.Debris.Stores:GetDescendants()) do
-        if v:FindFirstChildOfClass("ProximityPrompt") and v:FindFirstChildOfClass("ProximityPrompt").HoldDuration == 1  then
+        if v:FindFirstChildOfClass("ProximityPrompt") and v:FindFirstChildOfClass("ProximityPrompt").HoldDuration == 1  and v:FindFirstChild("Clothing") then
             local ClothPrice = string.gsub(v.ProximityPrompt.ActionText,"%D+","")
             local ClothName = v.ProximityPrompt.ObjectText
             local ClothEsp = v.Clothing
-
-            
 
             if v.ProximityPrompt.ActionText == "Повесить" and ClothEsp:FindFirstChild("BoxHandleAdornment") then
                 ClothEsp.BoxHandleAdornment:Remove()
@@ -105,6 +188,7 @@ function Cloth(PriceTable,NameTable)
          
             if ClothPrice ~= nil and ClothName ~= nil and ClothEsp ~= nil then
                 if v.ProximityPrompt.ActionText ~= "Повесить" and ClothEsp:FindFirstChild("BoxHandleAdornment") == nil and table.find(NameTable,ClothName) and tonumber(ClothPrice) <= PriceTable[ClothName] then
+                
                     DrawEsp(ClothEsp)
                 end
           
@@ -175,6 +259,12 @@ local Esp = Window:MakeTab({
 	PremiumOnly = false
 })
 
+local Info = Window:MakeTab({
+	Name = "NEWS!!!",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
 
 Misc:AddToggle({
 	Name = "Auto-Sell Clothes ",
@@ -193,15 +283,38 @@ Misc:AddToggle({
 })
 
 Esp:AddToggle({
-	Name = "Sport-Master Esp",
+	Name = "Esp",
 	Default = false,
 	Callback = function(value)
         if value then 
-			_G.Sport_Master = true
-			while _G.Sport_Master do
-                Cloth(Sport_cloth_PriceTable,Sport_cloth_NameTable)
+			_G.Esp = true
+			while _G.Esp do
+                if _G.Sport_Master then
+                    Cloth(Sport_cloth_PriceTable,Sport_cloth_NameTable)
+                end
+                if _G.Adidas then
+                    Cloth(Adidas_cloth_PriceTable,Adidas_cloth_NameTable)
+                end
+                if _G.Bape then
+                    Cloth(Bape_cloth_PriceTable,Bape_cloth_NameTable)
+                end
+
                 task.wait(3)
             end         
+		else
+			_G.Esp = false
+		end 
+	end    
+})
+
+Esp:AddLabel("-------Stores--------")
+
+Esp:AddToggle({
+	Name = "Sport-Master",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Sport_Master = true 
 		else
 			_G.Sport_Master = false
 		end 
@@ -209,22 +322,43 @@ Esp:AddToggle({
 })
 
 Esp:AddToggle({
-	Name = "Your-Clothes Esp",
+	Name = "Adidas",
 	Default = false,
 	Callback = function(value)
         if value then 
-			_G.YourClth = true
-			while _G.YourClth do
-                Cloth(Your_cloth_PriceTable,Your_cloth_NameTable)
-                task.wait(3)
-            end         
+			_G.Adidas = true 
 		else
-			_G.YourClth = false
+			_G.Adidas = false
 		end 
 	end    
 })
 
-Esp:AddLabel("Your-Clothes Not working(Fixing...) fix tomorrow")
+Esp:AddToggle({
+	Name = "Bape",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Bape = true 
+		else
+			_G.Bape = false
+		end 
+	end    
+})
+
+
+
+Info:AddLabel("Join to my discord server!")
+Info:AddLabel("Fast updates and information")
+
+Info:AddButton({
+	Name = "Copy invite!",
+	Callback = function()
+        setclipboard("https://discord.gg/K6cNNkknQn")
+        Notify("Succes Copied!!","uh nuh",5)
+  	end    
+})
+
+--Required
 
 task.wait(3)
 _G.Loaded = true

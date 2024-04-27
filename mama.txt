@@ -1,5 +1,3 @@
-
-_G.Loaded = true
 if _G.Loaded == false then
 	print("Stop Spamming Script Loaded")
 	return
@@ -170,7 +168,7 @@ function HitboxVisual(Size,Transparency)
                     part.Name ="Hitbox"
                     part.Anchored = false
                     part.CanCollide = false
-                    part.Massless = false
+                    part.Massless = true
                     part.Position = EChar:FindFirstChild("HumanoidRootPart").Position
                     part.Size = Vector3.new(Size,Size,Size)
                     part.Transparency = Transparency
@@ -405,7 +403,7 @@ do
 			_G.HitBox_Visual = true
 			while _G.HitBox_Visual do 
                 if Alive() then
-                    --HitboxVisual(_G.HitBox_Size,_G.HitBox_Transparency)
+                    HitboxVisual(_G.HitBox_Size,_G.HitBox_Transparency)
                     task.wait(1)
                 end
 			end
@@ -416,8 +414,8 @@ do
 
 
     Tabs.Hitbox:AddParagraph({
-        Title = "Hitbox(Not Working)",
-        Content = "Fixing.."
+        Title = "Hitbox Working!!!",
+        Content = "Yupie"
     })
 
 
@@ -456,3 +454,6 @@ Window:SelectTab(1)
 notify("You bad","Touch grass(I Don't know how touch grass)",5)
 
 SaveManager:LoadAutoloadConfig()
+
+task.wait(3)
+_G.Loaded = true

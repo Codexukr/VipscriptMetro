@@ -282,6 +282,8 @@ Misc:AddToggle({
 	end    
 })
 
+Esp:AddLabel("Warning! not full payback the script is made on analytics")
+
 Esp:AddToggle({
 	Name = "Esp",
 	Default = false,

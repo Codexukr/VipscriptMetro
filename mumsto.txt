@@ -9,7 +9,7 @@ _G.Loaded = false
 local Sport_cloth_PriceTable = {
     -- Min price
     ["Красная Футболка 'Demix'"] = 1000 ,
-    ["Белая Футболка 'Puma'"] = 1500,
+    ["Белая Футболка 'Puma'"] = 1530,
     ["Серый Жилет 'Moncler'"] = 33000,
     ["Чёрные Джоггеры 'Puma'"] = 1400,
     ["Оранжевая Тренажёрная Куртка 'Nike'"] = 5700,
@@ -22,10 +22,10 @@ local Sport_cloth_PriceTable = {
     ["Серые Спортивные Брюки"] = 1400,
     ["Спортивные Штаны 'Polo'"] =1200,
     ["Чёрные Спортивные Штаны 'Adidas'"] = 2500,
-    ["Чёрная Спортивная Джинсовка 'Puma'"] = 2200
+    ["Чёрная Спортивная Джинсовка 'Puma'"] = 2200,
+    ["Чёрная Футболка 'Puma'"] = 1530
 
 } 
-
 
 
 
@@ -44,7 +44,8 @@ local Sport_cloth_NameTable = {
     "Серые Спортивные Брюки",
     "Спортивные Штаны 'Polo'",
     "Чёрные Спортивные Штаны 'Adidas'",
-    "Чёрная Спортивная Джинсовка 'Puma'"
+    "Чёрная Спортивная Джинсовка 'Puma'",
+    "Чёрная Футболка 'Puma'"
 }
 
 -------------SportMaster END-------------------
@@ -86,45 +87,175 @@ local Adidas_cloth_NameTable = {
 
 --Bape table
 local Bape_cloth_PriceTable = {
-    -- Min price
-    ["Black Зип-Худи 'Baby Milo'"] = 43000,
-    ["Бежевая Зип-Худи 'BAPE'"] = 48000,
-    ["Gray Зип-Худи 'BAPE'"] = 43000,
-    ["Рюкзак 'BAPE'"] = 99000,
-    ["Серый Свитшот 'BAPE STA'"] = 18500,
-    ["Чёрный Свитшот 'BAPE STA'"] = 30000,
-    ["Синий Зип-Худи 'BAPE STA'"] = 24000,
-    ["Белая Футболка 'BAPE'"] = 10200,
-    ["Чёрная Футболка 'BAPE x Baby Milo'"] = 5400,
-    ["Желтая Футболка 'BAPE'"] = 9200,
-    ["Красная Футболка 'BAPE'"] = 10800,
-    ["Белая Футболка 'BAPE STA'"] = 10500,
-    ["Лонгслив 'BAPE'"] = 24000,
-    ["Фиолетовый Зип-Худи 'Bape'"] = 35000
+    ["Фиолетовый Зип-Худи 'BAPE'"]= 40000,
+    ["Белая Футболка 'BAPE STA'"]= 10000,
+    ["Красная Футболка 'BAPE'"] =10000,
+    ["Чёрные Джинсы 'BAPE STA'"]=35000,
+    ["Тёмные Джинсы 'BAPE STA'"]=35000,
+    ["Бежевый Зип-Худи 'BAPE'"]=46000,
+    ["Бежевая Зип-Худи 'BAPE'"]=46000,
+    ["Рюкзак 'BAPE'"]=99000,
+    ["Черная Зип-Худи Baby-Milo"]=50000,
+    ["Черный Зип-Худи 'BAPE'"]=45000,
+    ["Бежевая Зип-Худи 'BAPE STA'"]=45000,
+    ["Серый Зип-Худи 'BAPE'"]=53000,
+    ["Чёрные Джинсы 'BAPE STA'"]=35000,
+    ["Джинсы 'BAPE'"]=35000,
+    ["Тёмные Джинсы 'BAPE STA'"]=35000,
+    ["Чёрный Джинсы 'BAPE STA'"]=35000,
+    ["Черный Зип-Худи 'BAPE x Baby Milo'"]=52000,
+    ["Черный С 'BAPE STA'"]=43000,
+    ["Синий Зип-Худи 'BAPE STA'"]=23500,
+    ["Серый Зип-Худи 'BAPE STA'"]=21000
 
 } 
 
+
+
 local Bape_cloth_NameTable = {
-    "Black Зип-Худи 'Baby Milo'",
-    "Бежевая Зип-Худи 'BAPE'",
-    "Gray Зип-Худи 'BAPE'",
-    "Рюкзак 'BAPE'",
-    "Серый Свитшот 'BAPE STA'",
-    "Чёрный Свитшот 'BAPE STA'",
-    "Синий Зип-Худи 'BAPE STA'",
-    "Белая Футболка 'BAPE'",
-    "Чёрная Футболка 'BAPE x Baby Milo'",
-    "Желтая Футболка 'BAPE'",
-    "Красная Футболка 'BAPE'",
+    "Фиолетовый Зип-Худи 'BAPE'",
     "Белая Футболка 'BAPE STA'",
-    "Лонгслив 'BAPE'",
-    "Фиолетовый Зип-Худи 'Bape'"
+    "Красная Футболка 'BAPE'",
+    "Чёрные Джинсы 'BAPE STA'",
+    "Тёмные Джинсы 'BAPE STA'",
+    "Бежевый Зип-Худи 'BAPE'",
+    "Бежевая Зип-Худи 'BAPE'",
+    "Рюкзак 'BAPE'",
+    "Черная Зип-Худи Baby-Milo",
+    "Черный Зип-Худи 'BAPE'",
+    "Бежевая Зип-Худи 'BAPE STA'",
+    "Серый Зип-Худи 'BAPE'",
+    "Чёрные Джинсы 'BAPE STA'",
+    "Джинсы 'BAPE'",
+    "Тёмные Джинсы 'BAPE STA'",
+    "Чёрный Джинсы 'BAPE STA'",
+    "Черный Зип-Худи 'BAPE x Baby Milo'",
+    "Черный С 'BAPE STA'",
+    "Синий Зип-Худи 'BAPE STA'",
+    "Серый Зип-Худи 'BAPE STA'"
 
 }
 
 --Bape table END----------------------------
 
+--Chrome Hearts table
+local ChromeHearts_cloth_PriceTable = {
+    -- Min price
+    ["Джинсы 'Levis X Chrome Hearts'"] = 725000,
+    ["Бежевая Кофта Cemetery Cross Tire Tracks 'Chrome Hearts'"] = 160000,
+    ["Brown Худи Horse Shoe 'Chrome Hearts'"] = 135000,
+    ["Чёрная Худи Multi Color Cross 'Chrome Hearts'"] = 170000,
+    ["Голубые Джинсы 'Chrome Hearts'"] = 240000,
+    ["Чёрное  Худи 'Chrome Hearts'"] = 160000,
+    ["Джинсы CROSS PINK 'Chrome Hearts'"] = 240000,
+    ["Джинсы CROSS RED 'Chrome Hearts'"] = 440000,
+    ["Джинсы CROSS GREEN 'Chrome Hearts'"] = 240000,
+    ["Белая кофта Plus Cross 'Chrome Hearts'"] = 77000,
+    ["Белый Лонгслив Las Vegas 'Chrome Hearts'"] = 77000,
+    ["Чёрная футболка Hong Kong 'Chrome Hearts'"] = 52000,
+    ["Чёрный свитшот Chomper 'Matty Boy X Chrome Hearts'"] = 77000,
+    ["Чёрная футболка America 'Chrome Hearts'"] = 45000,
+    ["Лаймовые Джинсы NYFW 'Chrome Hearts'"] = 3400000,
+    ["Штаны Multiple 'Chrome Hearts'"] = 96000,
+    ["Чёрный свитшот Horse Shoe 'Chrome Hearts'"] = 131000,
+    ["Кожанные Джинсы 'Matty Boy X Chrome Hearts'"] = 725000,
+    ["Штаны 'Chrome Hearts X CARHARTT'"] = 2200000,
+    ["Худи 'Chrome Hearts' Cemetery"] = 160000,
+    ["Кожанная Куртка Cross RED 'Chrome Hearts'"] = 444000,
+    ["Чёрная Куртка 'Matty Boy X Chrome Hearts'"] = 616000,
+    ["Цитрусовый Лонгслив Record 'Matty Boy X Chrome Hearts'"] = 12000,
+    ["Красный Лонгслив Chomper 'Matty Boy X Chrome Hearts'"] = 82000,
+    ["Коричневая Худи Horse Shoe 'Chrome Hearts'"] = 150000,
+    ["Чёрная Худи 'Chrome Hearts'"] = 150000
+} 
 
+local ChromeHearts_cloth_NameTable = {
+    "Джинсы 'Levis X Chrome Hearts'",
+    "Бежевая Кофта Cemetery Cross Tire Tracks 'Chrome Hearts'",
+    "Чёрная Худи Multi Color Cross 'Chrome Hearts'",
+    "Голубые Джинсы 'Chrome Hearts'",
+    "Чёрное  Худи 'Chrome Hearts'",
+    "Джинсы CROSS PINK 'Chrome Hearts'",
+    "Джинсы CROSS RED 'Chrome Hearts'",
+    "Джинсы CROSS GREEN 'Chrome Hearts'",
+    "Белая кофта Plus Cross 'Chrome Hearts'",
+    "Белый Лонгслив Las Vegas 'Chrome Hearts'",
+    "Чёрная футболка Hong Kong 'Chrome Hearts'",
+    "Чёрный свитшот Chomper 'Matty Boy X Chrome Hearts'",
+    "Чёрная футболка America 'Chrome Hearts'",
+    "Штаны Multiple 'Chrome Hearts'",
+    "Чёрный свитшот Horse Shoe 'Chrome Hearts'",
+    "Кожанные Джинсы 'Matty Boy X Chrome Hearts'",
+    "Штаны 'Chrome Hearts X CARHARTT'",
+    "Худи 'Chrome Hearts' Cemetery",
+    "Кожанная Куртка Cross RED 'Chrome Hearts'",
+    "Чёрная Куртка 'Matty Boy X Chrome Hearts'",
+    "Цитрусовый Лонгслив Record 'Matty Boy X Chrome Hearts'",
+    "Красный Лонгслив Chomper 'Matty Boy X Chrome Hearts'",
+    "Коричневая Худи Horse Shoe 'Chrome Hearts'",
+    "Чёрная Худи 'Chrome Hearts'"
+
+}
+
+
+
+--Chrome Hearts table END----------------------------
+
+--Vetements table
+local Vetements_cloth_PriceTable = {
+    -- Min price
+    ["Белая Футболка Stop Being Rich 'Vetements'"] = 60000,
+    ["Синяя Куртка Global Mind 'Vetements'"] = 83000,
+    ["Черное Худи Private Bay 'Vetements'"] = 83000,
+    ["Черное Худи RAMMSTEIN 'Vetements'"] = 52000,
+    ["Рубашка Marilyn Manson 'Vetements'"] = 84000,
+    ["Синий Лонгслив Made in Europe 'Vetements'"] = 85000,
+    ["Фиолетовая Худи Only Vetements 'Vetements'"] = 77000,
+    ["Серое Худи Hug Me 'Vetements'"] = 99000,
+    ["Розовые Пижамные Штаны Pink Checkered 'Vetements'"] = 139000,
+    ["Белые Штаны SS19 Distressed 'Vetements'"] = 81000,
+    ["Серые Штаны 'Vetements'"] = 139700,
+    ["Черные Штаны Gothic Mega Flared 'Vetements'"] = 219000,
+    ["Бежевые Штаны Made on Earth 'Vetements'"] = 34000,
+    ["Джинсы Winter 2018 Logo Embroidered 'Vetements'"] = 79000,
+    ["Камуфляжные Штаны Camo Stikers 'Vetements'"] = 138000,
+    ["Красные Штаны Fan Deconstucted 'Vetements'"] = 143000,
+    ["Оранжевые  Пижамные  Штаны Gray & Orange Check 'Vetements'"] = 158000,
+    ["Пижамные Штаны Spider Man 'Vetements'"] = 70000,
+    ["Розовое Худи I got Lucky 'Vetements'"] = 60000,
+    ["Черное Зип Худи Bro 'Embroidery'"] = 80000,
+    ["Черное Худи Ecstasy 'Vetements'"] = 95000,
+    ["Черная Футболка Think While Its Still Legal 'Vetements'"] = 55000
+
+} 
+
+local Vetements_cloth_NameTable = {
+    "Футболка Stop Being Rich 'Vetements'",
+    "Синяя Куртка Global Mind 'Vetements'",
+    "Черное Худи Private Bay 'Vetements'",
+    "Черное Худи RAMMSTEIN 'Vetements'",
+    "Рубашка Marilyn Manson 'Vetements'",
+    "Синий Лонгслив Made in Europe 'Vetements'",
+    "Фиолетовая Худи Only Vetements 'Vetements'",
+    "Серое Худи Hug Me Vetements",
+    "Розовые Пижамные Штаны Pink Checkered 'Vetements'",
+    "Белые Штаны SS19 Distressed 'Vetements'",
+    "Серые Штаны Vetements",
+    "Черные Штаны Gothic Mega Flared 'Vetements'",
+    "Бежевые Штаны Made on Earth Vetements",
+    "Джинсы Winter 2018 Logo Embroidered 'Vetements'",
+    "Камуфляжные Штаны Camo Stikers 'Vetements'",
+    "Красные Штаны Fan Deconstucted 'Vetements'",
+    "Оранжевые  Пижамные  Штаны Gray & Orange Check 'Vetements'",
+    "Пижамные Штаны Spider Man 'Vetements'",
+    "Розовое Худи I got Lucky 'Vetements'",
+    "Черное Зип Худи Bro Embroidery",
+    "Черное Худи Ecstasy 'Vetements'",
+    "Черная Футболка Think While Its Still Legal 'Vetements'"
+
+}
+
+--Vetements table END----------------------------
 
 local lp = game:GetService("Players").LocalPlayer
 
@@ -148,7 +279,8 @@ _G.Esp = false
 _G.Sport_Master = false
 _G.Adidas = false
 _G.Bape = false
-
+_G.Chrome_Hearts = false
+_G.Vetements = false
 
 
 function getchar()
@@ -295,10 +427,17 @@ Esp:AddToggle({
                     Cloth(Sport_cloth_PriceTable,Sport_cloth_NameTable)
                 end
                 if _G.Adidas then
+                    print('adidased')
                     Cloth(Adidas_cloth_PriceTable,Adidas_cloth_NameTable)
                 end
                 if _G.Bape then
                     Cloth(Bape_cloth_PriceTable,Bape_cloth_NameTable)
+                end
+                if _G.Chrome_Hearts then
+                    Cloth(ChromeHearts_cloth_PriceTable,ChromeHearts_cloth_NameTable)
+                end
+                if _G.Vetements then
+                    Cloth(Vetements_cloth_PriceTable,Vetements_cloth_NameTable)
                 end
 
                 task.wait(3)
@@ -346,6 +485,31 @@ Esp:AddToggle({
 		end 
 	end    
 })
+
+Esp:AddToggle({
+	Name = "Chrome-Hearts",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Chrome_Hearts = true 
+		else
+			_G.Chrome_Hearts = false
+		end 
+	end    
+})
+
+Esp:AddToggle({
+	Name = "Vetements",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Vetements = true 
+		else
+			_G.Vetements = false
+		end 
+	end    
+})
+
 
 
 

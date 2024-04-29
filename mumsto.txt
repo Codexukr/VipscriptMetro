@@ -414,6 +414,16 @@ Misc:AddToggle({
 	end    
 })
 
+Misc:AddButton({
+	Name = "Server Hop!",
+	Callback = function()
+        Notify("Server Hop!","uh nuh",5)
+        local module = loadstring(game:HttpGet"https://raw.githubusercontent.com/LeoKholYt/roblox/main/lk_serverhop.lua")()
+
+        module:Teleport(game.PlaceId)
+  	end    
+})
+
 Esp:AddLabel("Warning! not full payback the script is made on analytics")
 
 Esp:AddToggle({
@@ -509,6 +519,7 @@ Esp:AddToggle({
 		end 
 	end    
 })
+
 
 
 

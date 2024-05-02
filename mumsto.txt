@@ -54,7 +54,7 @@ local Sport_cloth_NameTable = {
 --Adidas table
 local Adidas_cloth_PriceTable = {
     -- Min price
-    ["Серая Футболка Logo 'Adidas'"] = 3300,
+    ["Серая Футболка Logo 'Adidas'"] = 3400,
     ["Лаймовая Кофта White 'Adidas'"] = 3300,
     ["Красная Спортивка White 'Adidas'"] = 3300,
     ["Белая Футболка Pinstripe 'Adidas'"] = 2185,
@@ -63,7 +63,7 @@ local Adidas_cloth_PriceTable = {
     ["Белая Футболка Tricolor Germany 'Adidas'"] = 10735,
     ["Черное Худи 'Adidas'"] = 5950,
     ["Белое Поло 'Adidas'"] = 4050,
-    ["Серая Спортивка White 'Adidas'"] = 25100,
+    ["Серая Спортивка White 'Adidas'"] = 5100,
     ["Белый Свитер Black 'Adidas'"] = 4500
 } 
 
@@ -202,16 +202,16 @@ local ChromeHearts_cloth_NameTable = {
 --Vetements table
 local Vetements_cloth_PriceTable = {
     -- Min price
-    ["Белая Футболка Stop Being Rich 'Vetements'"] = 60000,
-    ["Синяя Куртка Global Mind 'Vetements'"] = 83000,
-    ["Черное Худи Private Bay 'Vetements'"] = 83000,
-    ["Черное Худи RAMMSTEIN 'Vetements'"] = 52000,
-    ["Рубашка Marilyn Manson 'Vetements'"] = 84000,
-    ["Синий Лонгслив Made in Europe 'Vetements'"] = 85000,
-    ["Фиолетовая Худи Only Vetements 'Vetements'"] = 77000,
-    ["Серое Худи Hug Me 'Vetements'"] = 99000,
-    ["Розовые Пижамные Штаны Pink Checkered 'Vetements'"] = 139000,
-    ["Белые Штаны SS19 Distressed 'Vetements'"] = 81000,
+    ["Белая футболка stop being rich 'Vetements'"] = 61000,
+    ["Синяя Куртка Global Mind 'Vetements'"] = 84000,
+    ["Черное Худи Private Bay 'Vetements'"] = 84000,
+    ["Черное Худи RAMMSTEIN 'Vetements'"] = 53000,
+    ["Рубашка Marilyn Manson 'Vetements'"] = 85000,
+    ["Синий Лонгслив Made in Europe 'Vetements'"] = 84000,
+    ["Фиолетовая Худи Only Vetements 'Vetements'"] = 78000,
+    ["Серое Худи Hug Me 'Vetements'"] = 100000,
+    ["Розовые Пижамные Штаны Pink Checkered 'Vetements'"] = 140000,
+    ["Белые Штаны SS19 Distressed 'Vetements'"] = 82000,
     ["Серые Штаны 'Vetements'"] = 139700,
     ["Черные Штаны Gothic Mega Flared 'Vetements'"] = 219000,
     ["Бежевые Штаны Made on Earth 'Vetements'"] = 34000,
@@ -219,15 +219,16 @@ local Vetements_cloth_PriceTable = {
     ["Камуфляжные Штаны Camo Stikers 'Vetements'"] = 138000,
     ["Красные Штаны Fan Deconstucted 'Vetements'"] = 143000,
     ["Оранжевые  Пижамные  Штаны Gray & Orange Check 'Vetements'"] = 158000,
-    ["Пижамные Штаны Spider Man 'Vetements'"] = 70000,
-    ["Розовое Худи I got Lucky 'Vetements'"] = 60000,
-    ["Черное Зип Худи Bro 'Embroidery'"] = 80000,
-    ["Черное Худи Ecstasy 'Vetements'"] = 95000,
-    ["Черная Футболка Think While Its Still Legal 'Vetements'"] = 55000
+    ["Пижамные Штаны Spider Man 'Vetements'"] = 71000,
+    ["Розовое Худи I got Lucky 'Vetements'"] = 61000,
+    ["Черное Зип Худи Bro 'Embroidery'"] = 81000,
+    ["Черное Худи Ecstasy 'Vetements'"] = 96000,
+    ["Черная футболка think while its still legal 'Vetements'"] = 56000
 
 } 
 
 local Vetements_cloth_NameTable = {
+    "Белая футболка stop being rich 'Vetements'",
     "Футболка Stop Being Rich 'Vetements'",
     "Синяя Куртка Global Mind 'Vetements'",
     "Черное Худи Private Bay 'Vetements'",
@@ -235,19 +236,19 @@ local Vetements_cloth_NameTable = {
     "Рубашка Marilyn Manson 'Vetements'",
     "Синий Лонгслив Made in Europe 'Vetements'",
     "Фиолетовая Худи Only Vetements 'Vetements'",
-    "Серое Худи Hug Me Vetements",
+    "Серое Худи Hug Me 'Vetements'",
     "Розовые Пижамные Штаны Pink Checkered 'Vetements'",
     "Белые Штаны SS19 Distressed 'Vetements'",
-    "Серые Штаны Vetements",
+    "Серые Штаны 'Vetements'",
     "Черные Штаны Gothic Mega Flared 'Vetements'",
-    "Бежевые Штаны Made on Earth Vetements",
+    "Бежевые Штаны Made on Earth 'Vetements'",
     "Джинсы Winter 2018 Logo Embroidered 'Vetements'",
     "Камуфляжные Штаны Camo Stikers 'Vetements'",
     "Красные Штаны Fan Deconstucted 'Vetements'",
     "Оранжевые  Пижамные  Штаны Gray & Orange Check 'Vetements'",
     "Пижамные Штаны Spider Man 'Vetements'",
     "Розовое Худи I got Lucky 'Vetements'",
-    "Черное Зип Худи Bro Embroidery",
+    "Черное Зип Худи Bro 'Embroidery'",
     "Черное Худи Ecstasy 'Vetements'",
     "Черная Футболка Think While Its Still Legal 'Vetements'"
 
@@ -260,27 +261,27 @@ local Vetements_cloth_NameTable = {
 
 
 local Zara_cloth_PriceTable = {
-    ["Синий пиджак 'ZARA'"]=10800,
-    ["Синяя куртка 'ZARA'"]=3800,
-    ["Чёрная джинсовка 'ZARA'"]=4780,
-    ["Синий свитер 'ZARA'"]=3700,
-    ["Серые штаны 'ZARA'"]=3000,
-    ["Черные порванные джинсы 'ZARA'"]=3000,
-    ["Порванные джинсы 'ZARA'"]=3000,
-    ["Серая Zip-Hodie 'ZARA'"]=3900,
-    ["Белые рваные джинсы 'ZARA'"]=3100,
-    ["Штаны Side Cheker 'ZARA'"]=3300 
+    ["Синий Пиджак 'ZARA'"]=10880,
+    ["Синяя Куртка 'ZARA'"]=3880,
+    ["Чёрная Джинсовка 'ZARA'"]=4780,
+    ["Синий Свитер 'ZARA'"]=3780,
+    ["Серые Штаны 'ZARA'"]=3080,
+    ["Чёрные Порванные Джинсы 'ZARA'"]=3080,
+    ["Порванные Джинсы 'ZARA'"]=3080,
+    ["Серая Zip-Hoodie 'ZARA'"]=3980,
+    ["Белые рваные джинсы 'ZARA'"]=3180,
+    ["Штаны Side Cheker 'ZARA'"]=3380 
 }
 
 local Zara_cloth_NameTable = {
-    "Синий пиджак 'ZARA'",
-    "Синяя куртка 'ZARA'",
-    "Чёрная джинсовка 'ZARA'",
-    "Синий свитер 'ZARA'",
-    "Серые штаны 'ZARA'",
-    "Черные порванные джинсы 'ZARA'",
-    "Порванные джинсы 'ZARA'",
-    "Серая Zip-Hodie 'ZARA'",
+    "Синий Пиджак 'ZARA'",
+    "Синяя Куртка 'ZARA'",
+    "Чёрная Джинсовка 'ZARA'",
+    "Синий Свитер 'ZARA'",
+    "Серые Штаны 'ZARA'",
+    "Чёрные Порванные Джинсы 'ZARA'",
+    "Порванные Джинсы 'ZARA'",
+    "Серая Zip-Hoodie 'ZARA'",
     "Белые рваные джинсы 'ZARA'",
     "Штаны Side Cheker 'ZARA'" 
 
@@ -327,7 +328,7 @@ local StoneIsland_cloth_NameTable = {
 
 local Balenciaga_cloth_PriceTable = {
     ["Красная Куртка 'Balenciaga'"] = 170000,
-    ["Брюки 'Balenciaga'"] = 37000,
+    ["Брюки 'Balenciaga'"] = 28000,
     ["Чёрный Свитер 'Balenciaga'"] = 22000,
     ["Красный Свитер 'Balenciaga'"] = 22000,
     ["Зелёный Свитер 'Balenciaga'"] = 22000,
@@ -349,10 +350,10 @@ local Balenciaga_cloth_NameTable = {
 ------Balenciaga End ---
 
 local LouisVuitton_cloth_PriceTable = {
-    ["Тёмные Деловые Брюки 'Louis Vuitton'"]=135000,
-    ["Рюкзак 'Louis Vuitton'"]=240000,
+    ["Тёмные Деловые Брюки 'Louis Vuitton'"]=138000,
+    ["Рюкзак 'Louis Vuitton'"]=250000,
     ["Белая Джинсовка Varsity 'Louis Vuitton'"]=620000,
-    ["Синий Свитер Intarsia Logo 'Louis Vuitton'"]=95000
+    ["Синий Свитер Intarsia Logo 'Louis Vuitton'"]=100000
 }
 
 local LouisVuitton_cloth_NameTable = {
@@ -600,7 +601,7 @@ Esp:AddToggle({
                 end
 
                 if _G.StoneIsland then
-                    Cloth(Stoneisland_cloth_PriceTable,Stoneisland_cloth_NameTable)
+                    Cloth(StoneIsland_cloth_PriceTable,StoneIsland_cloth_NameTable)
                 end
 
                 if _G.LouisV then
@@ -764,3 +765,5 @@ Info:AddButton({
 
 task.wait(3)
 _G.Loaded = true
+
+

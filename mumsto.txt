@@ -101,10 +101,9 @@ local Bape_cloth_PriceTable = {
     ["Серый Зип-Худи 'BAPE'"]=53000,
     ["Чёрные Джинсы 'BAPE STA'"]=35000,
     ["Джинсы 'BAPE'"]=35000,
-    ["Тёмные Джинсы 'BAPE STA'"]=35000,
     ["Чёрный Джинсы 'BAPE STA'"]=35000,
     ["Черный Зип-Худи 'BAPE x Baby Milo'"]=52000,
-    ["Черный С 'BAPE STA'"]=43000,
+    ["Черный Свитер 'BAPE STA'"]=43000,
     ["Синий Зип-Худи 'BAPE STA'"]=23500,
     ["Серый Зип-Худи 'BAPE STA'"]=21000
 
@@ -117,7 +116,6 @@ local Bape_cloth_NameTable = {
     "Белая Футболка 'BAPE STA'",
     "Красная Футболка 'BAPE'",
     "Чёрные Джинсы 'BAPE STA'",
-    "Тёмные Джинсы 'BAPE STA'",
     "Бежевый Зип-Худи 'BAPE'",
     "Бежевая Зип-Худи 'BAPE'",
     "Рюкзак 'BAPE'",
@@ -130,7 +128,7 @@ local Bape_cloth_NameTable = {
     "Тёмные Джинсы 'BAPE STA'",
     "Чёрный Джинсы 'BAPE STA'",
     "Черный Зип-Худи 'BAPE x Baby Milo'",
-    "Черный С 'BAPE STA'",
+    "Черный Свитер 'BAPE STA'",
     "Синий Зип-Худи 'BAPE STA'",
     "Серый Зип-Худи 'BAPE STA'"
 
@@ -257,6 +255,150 @@ local Vetements_cloth_NameTable = {
 
 --Vetements table END----------------------------
 
+
+--Zara Table----------------------------
+
+
+local Zara_cloth_PriceTable = {
+    ["Синий пиджак 'ZARA'"]=10800,
+    ["Синяя куртка 'ZARA'"]=3800,
+    ["Чёрная джинсовка 'ZARA'"]=4780,
+    ["Синий свитер 'ZARA'"]=3700,
+    ["Серые штаны 'ZARA'"]=3000,
+    ["Черные порванные джинсы 'ZARA'"]=3000,
+    ["Порванные джинсы 'ZARA'"]=3000,
+    ["Серая Zip-Hodie 'ZARA'"]=3900,
+    ["Белые рваные джинсы 'ZARA'"]=3100,
+    ["Штаны Side Cheker 'ZARA'"]=3300 
+}
+
+local Zara_cloth_NameTable = {
+    "Синий пиджак 'ZARA'",
+    "Синяя куртка 'ZARA'",
+    "Чёрная джинсовка 'ZARA'",
+    "Синий свитер 'ZARA'",
+    "Серые штаны 'ZARA'",
+    "Черные порванные джинсы 'ZARA'",
+    "Порванные джинсы 'ZARA'",
+    "Серая Zip-Hodie 'ZARA'",
+    "Белые рваные джинсы 'ZARA'",
+    "Штаны Side Cheker 'ZARA'" 
+
+}
+
+--Zara Table End----------------------------
+
+------Stone Island table ---
+local StoneIsland_cloth_PriceTable = {
+    ["Фиолетовый Свитер 'Stone Island'"] = 30000,
+    ["Болотная Куртка 'Stone Island'"] = 78000,
+    ["Чёрная Куртка 'Stone Island'"] = 80000,
+    ["Свитшот С Жилетом 'Carhartt X Stone Island'"] = 35000,
+    ["Болотный Свитшот 'Stone Island'"] = 23000,
+    ["Чёрная Джинсовка 'Stone Island'"] = 31000,
+    ["Бежевая Рубашка 'Stone Island'"] = 15000,
+    ["Красный Свитшот 'Stone Island'"] = 20000,
+    ["Серый Свитер 'Stone Island'"] = 25000,
+    ["Черные Джоггеры 'Stone Island'"] = 25000,
+    ["Синие Джинсы 'Stone Island'"] = 25000,
+    ["Тёмные Штаны 'Stone Island'"] = 25000,
+    ["Серые Джинсы 'Stone Island'"] = 29000
+}
+
+local StoneIsland_cloth_NameTable = {
+    "Фиолетовый Свитер 'Stone Island'",
+    "Болотная Куртка 'Stone Island'",
+    "Чёрная Куртка 'Stone Island'",
+    "Свитшот С Жилетом 'Carhartt X Stone Island'",
+    "Болотный Свитшот 'Stone Island'",
+    "Чёрная Джинсовка 'Stone Island'",
+    "Бежевая Рубашка 'Stone Island'",
+    "Красный Свитшот 'Stone Island'",
+    "Серый Свитер 'Stone Island'",
+    "Черные Джоггеры 'Stone Island'",
+    "Синие Джинсы 'Stone Island'",
+    "Тёмные Штаны 'Stone Island'",
+    "Серые Джинсы 'Stone Island'"
+}
+
+------Stone Island table Enda ---
+
+------Balenciaga ---
+
+local Balenciaga_cloth_PriceTable = {
+    ["Красная Куртка 'Balenciaga'"] = 170000,
+    ["Брюки 'Balenciaga'"] = 37000,
+    ["Чёрный Свитер 'Balenciaga'"] = 22000,
+    ["Красный Свитер 'Balenciaga'"] = 22000,
+    ["Зелёный Свитер 'Balenciaga'"] = 22000,
+    ["Потрёпанные Штаны 'Balenciaga'"] = 25000,
+    ["Тёмные Джинсы 'Balenciaga'"] = 35000,
+
+}
+
+local Balenciaga_cloth_NameTable = {
+    "Красная Куртка 'Balenciaga'",
+    "Брюки 'Balenciaga'",
+    "Чёрный Свитер 'Balenciaga'",
+    "Красный Свитер 'Balenciaga'",
+    "Зелёный Свитер 'Balenciaga'",
+    "Потрёпанные Штаны 'Balenciaga'",
+    "Тёмные Джинсы 'Balenciaga'"
+}
+
+------Balenciaga End ---
+
+local LouisVuitton_cloth_PriceTable = {
+    ["Тёмные Деловые Брюки 'Louis Vuitton'"]=135000,
+    ["Рюкзак 'Louis Vuitton'"]=240000,
+    ["Белая Джинсовка Varsity 'Louis Vuitton'"]=620000,
+    ["Синий Свитер Intarsia Logo 'Louis Vuitton'"]=95000
+}
+
+local LouisVuitton_cloth_NameTable = {
+    "Тёмные Деловые Брюки 'Louis Vuitton'",
+    "Рюкзак 'Louis Vuitton'",
+    "Белая Джинсовка Varsity 'Louis Vuitton'",
+    "Синий Свитер Intarsia Logo 'Louis Vuitton'"
+}
+
+local Gucci_cloth_PriceTable = {
+    ["Розовая Рубашка  Love Letter 'Gucci'"]=50000,
+    ["Бежевый свитер Lamb 'Gucci'"]=84000,
+    ["Бежевая футболка Logo 'Gucci'"]=24000,
+    ["Красная Худи Snake Print 'Gucci'"]=70000,
+    ["Синий Спортивный Костюм 'Gucci'"]=143000,
+    ["Синяя Рубашка 'Gucci'"]=108000,
+    ["Куртка Tiger Print 'Gucci'"]=110000,
+    ["Монограммная Футболка Ghost 'Gucci'"]=29000,
+    ["Монограммная Джинсовка Ghost 'Gucci'"]=142000,
+    ["Чёрное Худи Future 'Gucci'"]=42000,
+    ["Чёрное Худи Logo 'Gucci'"]=117000,
+    ["Синяя Кожаная Куртка 'Gucci'"]=140000,
+    ["Синяя Джинсовка 'Gucci'"]=127000,
+    ["Черные Джинсы 'Snake Gucci'"]=92000,
+    ["Фиолетовая Джинсовка Варсити 'Gucci x OffWhite'"]=380000
+}
+
+local Gucci_cloth_NameTable = {
+    "Розовая Рубашка  Love Letter 'Gucci'",
+    "Бежевый свитер Lamb 'Gucci'",
+    "Бежевая футболка Logo 'Gucci'",
+    "Красная Худи Snake Print 'Gucci'",
+    "Синий Спортивный Костюм 'Gucci'",
+    "Синяя Рубашка 'Gucci'",
+    "Куртка Tiger Print 'Gucci'",
+    "Монограммная Футболка Ghost 'Gucci'",
+    "Монограммная Джинсовка Ghost 'Gucci'",
+    "Чёрное Худи Future 'Gucci'",
+    "Чёрное Худи Logo 'Gucci'",
+    "Синяя Кожаная Куртка 'Gucci'",
+    "Синяя Джинсовка 'Gucci'",
+    "Черные Джинсы 'Snake Gucci'",
+    "Фиолетовая Джинсовка Варсити 'Gucci x OffWhite'"
+}
+
+
 local lp = game:GetService("Players").LocalPlayer
 
 local success, err = pcall(function()
@@ -281,6 +423,11 @@ _G.Adidas = false
 _G.Bape = false
 _G.Chrome_Hearts = false
 _G.Vetements = false
+_G.Zara = false
+_G.StoneIsland =false
+_G.Balenciaga = false
+_G.LouisV = false
+_G.Gucci = false
 
 
 function getchar()
@@ -437,7 +584,6 @@ Esp:AddToggle({
                     Cloth(Sport_cloth_PriceTable,Sport_cloth_NameTable)
                 end
                 if _G.Adidas then
-                    print('adidased')
                     Cloth(Adidas_cloth_PriceTable,Adidas_cloth_NameTable)
                 end
                 if _G.Bape then
@@ -449,6 +595,25 @@ Esp:AddToggle({
                 if _G.Vetements then
                     Cloth(Vetements_cloth_PriceTable,Vetements_cloth_NameTable)
                 end
+                if _G.Zara then
+                    Cloth(Zara_cloth_PriceTable,Zara_cloth_NameTable)
+                end
+
+                if _G.StoneIsland then
+                    Cloth(Stoneisland_cloth_PriceTable,Stoneisland_cloth_NameTable)
+                end
+
+                if _G.LouisV then
+                    Cloth(LouisVuitton_cloth_PriceTable,LouisVuitton_cloth_NameTable)
+                end
+
+                if _G.Gucci then
+                    Cloth(Gucci_cloth_PriceTable,Gucci_cloth_NameTable)
+                end
+                if _G.Balenciaga then
+                    Cloth(Balenciaga_cloth_PriceTable,Balenciaga_cloth_NameTable)
+                end
+
 
                 task.wait(3)
             end         
@@ -519,6 +684,66 @@ Esp:AddToggle({
 		end 
 	end    
 })
+
+Esp:AddToggle({
+	Name = "Zara",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Zara = true 
+		else
+			_G.Zara = false
+		end 
+	end    
+})
+
+Esp:AddToggle({
+	Name = "Stone-Island",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.StoneIsland= true 
+		else
+			_G.StoneIsland = false
+		end 
+	end    
+})
+
+Esp:AddToggle({
+	Name = "Balenciaga",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Balenciaga = true 
+		else
+			_G.Balenciaga = false
+		end 
+	end    
+})
+
+Esp:AddToggle({
+	Name = "Louis-Vitton",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.LouisV = true 
+		else
+			_G.LouisV = false
+		end 
+	end    
+})
+Esp:AddToggle({
+	Name = "Gucci",
+	Default = false,
+	Callback = function(value)
+        if value then 
+			_G.Gucci = true 
+		else
+			_G.Gucci = false
+		end 
+	end    
+})
+
 
 
 
